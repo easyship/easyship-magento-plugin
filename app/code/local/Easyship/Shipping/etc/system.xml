@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    
+    <tabs>
+        <easyship_shipping translate="label" module="easyship">
+            <label>Easyship</label>
+            <sort_order>200</sort_order>
+        </easyship_shipping>
+    </tabs>
+
+    <sections>
+        <easyship_options translate="label" module="easyship">
+            <label>Easyship Settings</label>
+            <tab>easyship_shipping</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <es_shipping translate="label" module="easyship">
+                    <label>Easyship Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                         <name translate="label">
+                            <label>Website name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </name>
+                        <apikey translate="label"> 
+                            <label>Easyship API Key</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>30</sort_order>
+                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </apikey>
+                        <secret translate="label">
+                            <label>Easyship API Secret</label>
+                            <frontend_type>text</frontend_type>
+                             <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>40</sort_order>
+                             <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </secret>
+                        <generate>
+                            <label>Get Easyship Credentials</label>
+                            <comment><![CDATA[Generate Easyship API key and secret from Easyship Portal.]]></comment>
+                            <frontend_type>button</frontend_type>
+                            <button_label>Get Credentials from Easyship</button_label>
+                            <frontend_model>easyship/adminhtml_config_generate</frontend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </generate>
+                    </fields>
+                </es_shipping>
+            </groups>
+        </easyship_options>
+    </sections>
+
+</config>
