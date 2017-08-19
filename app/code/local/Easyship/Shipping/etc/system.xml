@@ -43,7 +43,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </name>
-            <!--             <apikey translate="label"> 
+                        <apikey translate="label"> 
                             <label>Easyship API Key</label>
                             <frontend_type>text</frontend_type>
                             <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
@@ -60,7 +60,7 @@
                              <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </secret> -->
+                        </secret>
                         <generate>
                             <label>Get Easyship Credentials</label>
                             <comment><![CDATA[Generate Easyship API key and secret from Easyship Portal.]]></comment>
@@ -71,7 +71,6 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
-
                         </generate>
                     </fields>
                 </es_shipping>
