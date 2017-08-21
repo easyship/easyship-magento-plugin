@@ -48,7 +48,6 @@
                 <shipment_requesttype>0</shipment_requesttype>
             </easyship>    
         </carriers>
-
     </default>
     <adminhtml>
         <acl>
