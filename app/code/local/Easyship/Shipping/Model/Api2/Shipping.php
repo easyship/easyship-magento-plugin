@@ -104,6 +104,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                 }
             }
         }
+
         return $items;
     }
 
@@ -139,6 +140,9 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
     protected function _getOrders(array $orderIds)
     {
         $orders = array();
+        if (count($orderIds) == 0) {
+          return $orders;
+        }
         $items    = $this->_getItems($orderIds);
         $addresses = $this->_getAddresses($orderIds);
         $payments = $this->_getPayment($orderIds);
@@ -155,6 +159,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                 foreach ($collection->getItems() as $order) {
                     $orderId = $order->getId();
                     $_order = $orderFilter->out($order->toArray());
+                    $_order['order_id'] = $orderId;
                     for ($i=0; $i < count($addresses[$orderId]); $i++) {
                         $address = $addresses[$orderId][$i];
                         if ($address['address_type'] == 'billing') {
@@ -176,6 +181,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                     $_order['items'] = $items[$orderId];
                     $_order['payment'] = $payments[$orderId];
                     $_order['status_history'] = $status[$orderId];
+
                     $orders[] = $_order;
                 }
             }
