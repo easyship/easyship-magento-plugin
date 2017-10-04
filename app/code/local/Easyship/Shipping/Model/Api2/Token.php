@@ -9,10 +9,11 @@ class Easyship_Shipping_Model_Api2_Token extends Mage_Api2_Model_Resource
         $activatePath = 'easyship_options/ec_shipping/store_' . $storeId . '_isExtActive';
 
         $encToken = Mage::helper('core')->encrypt($token);
-        Mage::getConfig()->saveConfig($tokenPath,$encToken, 'default', 0);
-        Mage::getConfig()->saveConfig($enablePath,'1', 'default', 0);
+        Mage::getConfig()->saveConfig($tokenPath, $encToken, 'default', 0);
+        Mage::getConfig()->saveConfig($enablePath, '1', 'default', 0);
         Mage::getConfig()->saveConfig($activatePath, '1', 'default', 0);
 
         // return empty respond
         return array();
     }
+}
