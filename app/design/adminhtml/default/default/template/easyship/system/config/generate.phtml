@@ -1,7 +1,7 @@
 <div>
 <?php
 
-if (!$this->getIsActived()) {
+if (!$this->getActived()) {
     ?>
         <span><strong>Plugin Status</strong>: Not active</span>
         <button type="button" onclick="javascript:easyship.postRegistration('<?php echo $this->getStoreurl()?>', <?php echo $this->getStoreid() ?>);">ACITVATE PLUGIN</button>
@@ -12,7 +12,7 @@ else {
     ?>
 
         <span><strong>Plugin Status</strong>: Active</span>
-        <?php if ($this->getIsEnabled()) {?>
+        <?php if ($this->getEnabled()) {?>
         <button  type="button" onclick="javascript:alert('ok')">DEACTIVATE THE RATES</button>
         <?php } else {?>
             <button  type="button" onclick="javascript:alert('ok')">ACTIVATE THE RATES</button>
