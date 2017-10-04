@@ -1,3 +1,24 @@
+<div>
 <?php
-echo $this->getButtonHtml();
+
+if (!$this->getIsActived()) {
+    ?>
+        <span><strong>Plugin Status</strong>: Not active</span>
+        <button type="button" onclick="javascript:easyship.postRegistration('<?php echo $this->getStoreurl()?>', <?php echo $this->getStoreid() ?>);">ACITVATE PLUGIN</button>
+
+    <?php
+}
+else {
+    ?>
+
+        <span><strong>Plugin Status</strong>: Active</span>
+        <?php if ($this->getIsEnabled()) {?>
+        <button  type="button" onclick="javascript:alert('ok')">DEACTIVATE THE RATES</button>
+        <?php } else {?>
+            <button  type="button" onclick="javascript:alert('ok')">ACTIVATE THE RATES</button>
+        <?php } ?>
+
+    <?php
+}
 ?>
+</div>

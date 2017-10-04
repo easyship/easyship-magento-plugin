@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>easyship/js/jquery-2.2.4.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>easyship/js/easyship.js</name></action>
+        </reference>
+    </adminhtml_system_config_edit>
+</layout>

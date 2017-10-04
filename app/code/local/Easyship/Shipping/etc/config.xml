@@ -43,8 +43,6 @@
                 <easyship_stage_oauth_url>https://auth-staging.easyship.com/oauth2/token</easyship_stage_oauth_url>
                 <easyship_stage_api_url>https://api-staging.easyship.com/rate/v1/rates</easyship_stage_api_url>
                 <token backend_model="adminhtml/system_config_backend_encrypted" />
-                <apikey backend_model="adminhtml/system_config_backend_encrypted"/>
-                <apisecret backend_model="adminhtml/system_config_backend_encrypted"/>
                 <shipment_requesttype>0</shipment_requesttype>
             </easyship>    
         </carriers>
@@ -69,5 +67,23 @@
                 </admin>
             </resources>
         </acl>
+        <layout>
+            <updates>
+                <easyship>
+                    <file>easyship.xml</file>
+                </easyship>
+            </updates>
+        </layout>
     </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Easyship_Shipping after="Mage_Adminhtml">Easyship_Shipping_Adminhtml</Easyship_Shipping>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

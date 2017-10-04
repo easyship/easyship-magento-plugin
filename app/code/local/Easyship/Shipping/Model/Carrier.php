@@ -4,9 +4,9 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 {
     protected $_code = 'easyship';
 
-    protected $_configCode = 'easyship_options/es_shipping/';
+    protected $_configCode = 'easyship_options/ec_shipping/';
 
-    protected $_token = 'e1ed01236eb0112f264bedf1f2a16206f4c01cdf0539c83241aa05a57a91b1c9';
+    protected $_token;
 
     protected $_request = null;
 
@@ -22,15 +22,22 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         return Mage::getStoreConfig( $this->_configCode . $code, $this->getStore() );
     }
 
+    protected function getActivate(Mage_Shipping_Model_Rate_Request $request) {
+        $id = $request->getStoreId();
+        return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', $this->getStore() );
+    }
+
     public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
     {  
         // Configuration setting will be not under carrier scope
-        if ( !$this->getConfigFlag('active') || !$this->getStoreConfig( 'active' ) )  {
+        if ( !$this->getConfigFlag('active') || !$this->getStoreConfig( 'active' ) || !$this->getActivate($request) )  {
             return false;
         }
+        $token_config = $this->_configCode . 'store_' . $request->getStoreId()  . '_token';
+        $this->_token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, $this->getStore()));
 
-        //$this->_token =  Mage::helper('core')->decrypt( $this->getConfigData( 'token' ) );
         Mage::log( 'Token: ' . $this->_token, null, 'easyship.log' );
+
         if ( !$this->_token ) {
             return false;
         }
@@ -177,6 +184,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
         if (!$response->isSuccessful()) {
             Mage::log( 'Fail to connect', null, 'easyship.log' );
+            Mage::log( var_export( $response, 1), null, 'easyship.log');
             return false;
         }
         
@@ -231,5 +239,26 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
         $prefer_rates[$rates[$lowest]['courier_id']] = $rates[$lowest];
         return $prefer_rates;
+    }
+
+    public function isTrackingAvailable()
+    {
+        return true;
+    }
+
+    public function getTrackingInfo($trackings) {
+        $result = Mage::getModel('shipping/tracking_result');
+        $tracking = Mage::getModel('shipping/tracking_result_status');
+        $tracking->setCarrier('easyship');
+        $tracking->setCarrierTitle('Easyship Shipping...');
+        $tracking->setTracking($trackings);
+        $tracking->setPopup(1);
+        $tracking->setUrl("http://192.168.99.100");
+        $result->append($tracking);
+
+        if ($tracks = $result->getAllTrackings()) {
+          return $tracks[0];
+        }
+        return false;
     }
 }

@@ -56,7 +56,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
         $trackData['track']['shipment_id'] = $track['parent_id'];
         $trackData['track']['created_at'] = $track['created_at'];
         $trackData['track']['updated_at'] = $track['updated_at'];
-        $trackData['track']['carroer_code'] = $track['carroer_code'];
+        $trackData['track']['carrier_code'] = $track['carrier_code'];
         $trackData['track']['title'] = $track['title'];
         $trackData['track']['number'] = $track['number'];
         $trackData['track']['order_id'] = $track['order_id'];

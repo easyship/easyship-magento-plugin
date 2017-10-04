@@ -12,6 +12,10 @@
                     </sales_shipping>
                 </children>
             </sales>
+            <easyship translate="title" module="api2">
+                <title>Easyship</title>
+                <sort_order>140</sort_order>
+            </easyship>
         </resource_groups>
         <resources>
             <shipping translate="title" module="api2">
@@ -193,7 +197,7 @@
                 </force_attributes> 
                 <routes>
                     <route_entity>
-                        <route>/sales/:id</route>
+                        <route>/sales/:orderincrementid</route>
                         <action_type>entity</action_type>
                     </route_entity>
                    <!--  <route_collection>
@@ -391,7 +395,7 @@
                 </force_attributes>
                 <routes>
                     <route_entity>
-                        <route>/shipments</route>
+                        <route>/sales/:orderincrementd/shipments</route>
                         <action_type>entity</action_type>
                     </route_entity>
                 </routes>
@@ -468,12 +472,38 @@
                 </force_attributes>
                 <routes>
                     <route_entity>
-                        <route>/sales/shipments/tracks</route>
+                        <route>/sales/:orderincrementid/shipments/:shipmentincrementid/tracks</route>
                         <action_type>entity</action_type>
                     </route_entity>
                 </routes>
                 <versions>1</versions>
             </ec_shipments_track>
+            <ec_token translate="title" module="api2">
+                <group>easyship</group>
+                <sort_order>10 </sort_order>
+                <model>easyship/api2_token</model>
+                <title> Easyship Access token</title>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                    </admin>
+                </privileges>
+                <attributes translate="token">
+                    <token>Access Token</token>
+                </attributes>
+                <force_attributes>
+                    <admin>
+                        <token>1</token>
+                    </admin>
+                </force_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/easyship_token</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                </routes>
+                <versions>1</versions>
+            </ec_token>
         </resources>
     </api2>
 </config>
