@@ -13,9 +13,9 @@ else {
 
         <span><strong>Plugin Status</strong>: Active</span>
         <?php if ($this->getEnabled()) {?>
-        <button  type="button" onclick="javascript:alert('ok')">DEACTIVATE THE RATES</button>
+        <button  type="button" onclick="javascript:easyship.disableRate('<?php echo $this->getDeacturl() ?>', <?php echo $this->getStoreid() ?>);">DEACTIVATE THE RATES</button>
         <?php } else {?>
-            <button  type="button" onclick="javascript:alert('ok')">ACTIVATE THE RATES</button>
+            <button  type="button" onclick="javascript:easyship.enableRate('<?php echo $this->getActurl() ?>', <?php echo $this->getStoreid() ?>);">ACTIVATE THE RATES</button>
         <?php } ?>
 
     <?php

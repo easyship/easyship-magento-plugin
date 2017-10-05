@@ -24,6 +24,33 @@ Easyship.prototype.postRegistration =  function (url, storeid) {
 
     };
 
+Easyship.prototype.enableRate = function(url, storeid) {
+    new Ajax.Request(url, {
+        parameters: {isAjax:1, method: "POST", store_id: storeid},
+        onSuccess: function(transport) {
+            location.reload();
+
+        },
+        onFailure: function(transport) {
+            alert("Error: Fail to enable rate.  Please try again.");
+        }
+    });
+};
+
+Easyship.prototype.disableRate = function(url, storeid) {
+    console.log(url);
+    console.log(storeid);
+    new Ajax.Request(url, {
+        parameters: {isAjax:1, method: "POST", store_id: storeid},
+        onSuccess: function(transport) {
+            location.reload();
+        },
+        onFailure: function(transport) {
+            alert("Error: Fail to enable rate.  Please try again.");
+        }
+    });
+}
+
 var easyship = new Easyship;
 
 

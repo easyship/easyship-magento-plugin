@@ -10,7 +10,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 {
     public function ajaxRegisterAction()
     {
-        Mage::log('new request', null, 'easyship.log');
         $response = array();
         try {
             if ($this->getRequest()->isPost()) {
@@ -110,8 +109,14 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     // make request to easyship
     protected function _doRequest($store_id, $requestBody)
     {
+        // Only for Dev
         $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
 
+        // Only for Dev
+        if (!isset($url)) {
+            Mage::log('endpoint empty', null, 'easyship.log');
+            throw new Exception('Endpoint has not been set');
+        }
         $endpoint = rtrim($url, '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
@@ -134,11 +139,58 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     protected function _isAllowed()
     {
         $adminSession = Mage::getSingleton('admin/session');
-        return $adminSession->isAllowed('easyship_shipping/easyship');
+        return true; //$adminSession->isAllowed('easyship_shipping/easyship');
     }
 
     public function ajaxActivateAction()
     {
+        Mage::log('new activate request', null, 'easyship.log');
 
+        $response = array();
+        try {
+            if ($this->getRequest()->isPost()) {
+
+                $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
+                $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
+                Mage::getConfig()->saveConfig($enablePath, '1', 'default', 0);
+                $this->getResponse()->setHeader('Content-type', 'application/json', true);
+                $response['status'] = 'ok';
+                $this->getResponse()->setBody(json_encode($response));
+            }
+        }
+        catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'easyship.log');
+            $response['error'] = $e->getMessage();
+            $this->getResponse()->clearHeaders()->setHeadeR('HTTP/1.1', '400 Bad Request');
+            $this->getResponse()->setHeader('Status', 400);
+
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(json_encode($response));
+        }
+    }
+
+    public function ajaxDeactivateAction()
+    {
+        Mage::log('new deactivate request', null, 'easyship.log');
+        $response = array();
+        try {
+            if ($this->getRequest()->isPost()) {
+
+                $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
+                $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
+                Mage::getConfig()->saveConfig($enablePath, '0', 'default', 0);
+                $this->getResponse()->setHeader('Content-type', 'application/json', true);
+                $response['status'] = 'ok';
+                $this->getResponse()->setBody(json_encode($response));
+            }
+        } catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'easyship.log');
+            $response['error'] = $e->getMessage();
+            $this->getResponse()->clearHeaders()->setHeadeR('HTTP/1.1', '400 Bad Request');
+            $this->getResponse()->setHeader('Status', 400);
+
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(json_encode($response));
+        }
     }
 }

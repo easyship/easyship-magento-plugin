@@ -38,10 +38,8 @@
                 <allowed_methods>easyship</allowed_methods>
                 <title>Easyship</title>
                 <model>easyship/carrier</model>
-                <easyship_oauth_url> https://auth.easyship.com/oauth2/token </easyship_oauth_url>
-                <easyship_api_url>https://api.easyship.com/rate/v1/rates</easyship_api_url>
-                <easyship_stage_oauth_url>https://auth-staging.easyship.com/oauth2/token</easyship_stage_oauth_url>
-                <easyship_stage_api_url>https://api-staging.easyship.com/rate/v1/rates</easyship_stage_api_url>
+                <easyship_api_url>https://api.easyship.com</easyship_api_url>
+                <easyship_stage_api_url>https://api-staging.easyship.com</easyship_stage_api_url>
                 <token backend_model="adminhtml/system_config_backend_encrypted" />
                 <shipment_requesttype>0</shipment_requesttype>
             </easyship>    

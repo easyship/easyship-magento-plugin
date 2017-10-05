@@ -19,8 +19,6 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
 
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
-//        $element->unsScope()->unsCanUserWebsiteValue()->unsCanUseDefaultValue();
-//        return parent::render($element);
 
         $id = $element->getHtmlId();
         $html = '<td class="label"><label for="'.$id.'"><strong>Store Name: </strong>'.$element->getLabel().'</label></td>';
@@ -117,26 +115,25 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
 
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
-      //  $originalData = $element->getOriginalData();
-       // $elementHtemlId = $element->getHtmlId();
-//        $this->addData(
-//            'html_id' => $elementHtemlId,
-//            'store_id' => $originalData[]
-//        )
+
         $id = $element->getStoreid();
-        Mage::log($id, null, 'easyship.log');
         $is_actived = Mage::app()->getStore($id)->getConfig('easyship_options/ec_shipping/store_' . $id . '_isExtActive');
         $is_enabled = Mage::app()->getStore($id)->getConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled');
         $url = Mage::helper( 'adminhtml')->getUrl('adminhtml/easyship/ajaxregister');
+        $enable_rate_url = Mage::helper('adminhtml')->getUrl('adminhtml/easyship/ajaxactivate');
+        $disable_rate_url = Mage::helper('adminhtml')->geturl('adminhtml/easyship/ajaxdeactivate');
         $this->addData(
             array(
                 'store' => $element->getLabel(),
                 'storeid' => $id,
                 'enabled' => $is_enabled,
                 'actived' => $is_actived,
-                'storeurl' => $url
+                'storeurl' => $url,
+                'acturl' => $enable_rate_url,
+                'deacturl' => $disable_rate_url
             )
         );
+
         return $this->_toHtml();
     }
 

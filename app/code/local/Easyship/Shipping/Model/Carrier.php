@@ -161,16 +161,17 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected function _doRequest()
     {
+        $env = Mage::getStoreConfig( 'easyship_options/ec_dev/env' , $this->getStore() );
 
-        $url = $this->getConfigData( 'easyship_stage_api_url' );
-
-        if ( !$url ) {
-            $url = 'https://api-staging.easyship.com/rate/v1/rates';
+        if ($env) {
+            $url = $this->getConfigData( 'easyship_stage_api_url');
         }
-        Mage::log( 'Request URL: ' . $url, null, "easyship.log" );
-   
+        else {
+            $url = $this->getConfigData( 'easyship_api_url');
+        }
 
-        $client = new Varien_Http_Client('https://api-staging.easyship.com/rate/v1/rates');
+        $url = $url . '/rate/v1/rates';
+        $client = new Varien_Http_Client($url);
         $client->setMethod(Varien_Http_Client::POST);
         $client->setHeaders(array(
             'Content-Type' => 'application/json',
