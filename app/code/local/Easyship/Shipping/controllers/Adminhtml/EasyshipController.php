@@ -73,8 +73,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
             throw new Exception('User session is not found');
         }
         $response['email'] = $user->getEmail();
-        $response['firstname'] = $user->getFirstname();
-        $response['lastname'] = $user->getLastname();
+        $response['first_name'] = $user->getFirstname();
+        $response['last_name'] = $user->getLastname();
         $response['mobile_phone'] = $user->getStoreConfig(Mage_Core_Model_Store::XML_PATH_STORE_STORE_PHONE, $store_id);
 
         return $response;
@@ -117,7 +117,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
             Mage::log('endpoint empty', null, 'easyship.log');
             throw new Exception('Endpoint has not been set');
         }
-        $endpoint = rtrim($url, '/') . '/api/v1/magento/registrations';
+        $endpoint = rtrim(trim($url), '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
         $client->setMethod(Varien_Http_Client::POST);
