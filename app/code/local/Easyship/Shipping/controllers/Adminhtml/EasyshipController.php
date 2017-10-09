@@ -38,7 +38,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'easyship.log');
             $response['error'] = $e->getMessage();
-            $this->getResponse()->clearHeaders()->setHeadeR('HTTP/1.1', '404 Not Found');
+            $this->getResponse()->clearHeaders()->setHeader('HTTP/1.1', '404 Not Found');
             $this->getResponse()->setHeader('Status', 404);
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -99,7 +99,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         $response = array();
         $response['id'] = $store_id;
         $response['name'] = $store->getFrontendName();
-        $response['url'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id);
+        $response['url'] = trim(Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id), '/');
 
         return $response;
 
@@ -161,7 +161,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'easyship.log');
             $response['error'] = $e->getMessage();
-            $this->getResponse()->clearHeaders()->setHeadeR('HTTP/1.1', '400 Bad Request');
+            $this->getResponse()->clearHeaders()->setHeader('HTTP/1.1', '400 Bad Request');
             $this->getResponse()->setHeader('Status', 400);
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
@@ -186,7 +186,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'easyship.log');
             $response['error'] = $e->getMessage();
-            $this->getResponse()->clearHeaders()->setHeadeR('HTTP/1.1', '400 Bad Request');
+            $this->getResponse()->clearHeaders()->setHeader('HTTP/1.1', '400 Bad Request');
             $this->getResponse()->setHeader('Status', 400);
 
             $this->getResponse()->setHeader('Content-type', 'application/json', true);

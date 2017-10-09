@@ -56,17 +56,16 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
 
     protected function _validateOrderIncrementId($data)
     {
+        $shipmentIncrementId = $data['track']['shipmentIncrementId'];
         $orderIncrementId = $data['track']['orderIncrementId'];
-
+        $shipment = Mage::getModel('sales/order_shipment')->loadByIncrementId($shipmentIncrementId);
         if (!is_string($orderIncrementId)) {
             $this->_critical('Order Increment Id is not a string in request.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST );
         }
 
-        $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
-        if (!$order->getId()) {
-            $this->_critical('Order does not exist.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+        if ($shipment->getOrder()->getIncrementId() != $orderIncrementId) {
+            $this->_critical('Order Increment Id does not match', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
-
     }
 
     protected function _validateShipmentIncrementId($data)

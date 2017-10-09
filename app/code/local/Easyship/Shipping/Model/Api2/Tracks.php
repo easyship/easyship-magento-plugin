@@ -22,10 +22,13 @@ class Easyship_Shipping_Model_Api2_Tracks extends Mage_Api2_Model_Resource
                     ->setTitle($title);
 
         $shipment->addTrack($track);
+        $shipment->getOrder()->setIsInProcess(true);
 
         try {
-            $shipment->save();
-            $track->save();
+            Mage::getModel('core/resource_transaction')
+                ->addObject($shipment)
+                ->addObject($shipment->getOrder())
+                ->save();
         }
         catch (Mage_Api2_Exception $e) {
             $this->_critical(self::RESOURCE_UNKNOWN_ERROR);
