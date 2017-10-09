@@ -193,6 +193,7 @@
                         <shipping_address>1</shipping_address>
                         <items>1</items>
                         <status_history>1</status_history>
+                        <shipments>1</shipments>
                     </admin>
                 </force_attributes> 
                 <routes>

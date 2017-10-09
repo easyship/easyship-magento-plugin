@@ -18,6 +18,7 @@ class Easyship_Shipping_Model_Api2_Items_Rest_Admin_V1 extends Easyship_Shipping
         $orderData = $order->getData();
         $addresses = $this->_getAddresses(array($orderId));
         $items     = $this->_getItems(array($orderId));
+        $shipments = $this->_getShipment(array($orderId));
         $payments  = $this->_getPayment(array($orderId));
         $status    = $this->_getStatusHistory(array($orderId));
         $orderData['order_id'] = $orderId;
@@ -53,6 +54,13 @@ class Easyship_Shipping_Model_Api2_Items_Rest_Admin_V1 extends Easyship_Shipping
 
         if ($status) {
             $orderData['status_history'] = $status[$orderId];
+        }
+
+        if ($shipments) {
+            $orderData['shipments'] = $shipments[$orderId];
+        }
+        else {
+            $orderData['shipments'] = array();
         }
 
         return $orderData;

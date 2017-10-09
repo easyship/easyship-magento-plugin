@@ -79,7 +79,7 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
 
             $paymnetsFilter = $this->_getSubModel('ec_payment', array())->getFilter();
             foreach ($this->_getPaymentCollection($orderIds)->getItems() as $item) {
-                $payments[$item->getParentId()][] = $paymnetsFilter->out($item->toArray());
+                $payments[$item->getParentId()] = $paymnetsFilter->out($item->toArray());
             }
         }
         return $payments;
@@ -165,6 +165,61 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
     }
 
 
-    
+    /**
+     *  Retrieve Shipment Status
+     *
+     * @param array $orderIds
+     * @return array
+     */
+    protected function _getShipment(array $orderIds)
+    {
+        $shipments = array();
+
+        if ($this->_isSubCallAllowed('ec_shipments')) {
+            $statusFilter = $this->_getSubModel('ec_shipments', array())->getFilter();
+
+            if ($statusFilter->getAllowedAttributes()) {
+                $collection = Mage::getResourceModel('sales/order_shipment_collection');
+               $collection->addAttributeToFilter('order_id', $orderIds);
+
+                foreach ($collection->getItems() as $item) {
+                    $order = Mage::getModel('sales/order')->load($item->getOrderId());
+                    $filtered_result = $statusFilter->out($item->toArray());
+                    $filtered_result['order_increment_id'] =  $order->getIncrementId();
+                    $filtered_result['tracks'] = $this->_getTracks(array($item->getId()));
+                    $shipments[$item->getOrderId()][] = $filtered_result;
+                }
+             }
+
+        }
+        return $shipments;
+    }
+
+    /**
+     * Retrieve track for shipment
+     *
+     * @param array $shipmentIds
+     * @return array
+     */
+
+    protected function _getTracks(array $shipmentIds)
+    {
+        $tracks = array();
+        if ($this->_isSubCallAllowed('ec_shipments_track')) {
+            $tracksFilter = $this->_getSubModel('ec_shipments_track', array())->getFilter();
+
+            if ($tracksFilter->getAllowedAttributes()) {
+                $collection = Mage::getResourceModel('sales/order_shipment_track_collection');
+
+                $collection->addAttributeToFilter('parent_id', $shipmentIds);
+
+                foreach ($collection->getItems() as $item) {
+                    $tracks[] = $tracksFilter->out($item->toArray());
+                }
+            }
+        }
+        return $tracks;
+    }
+
 }
    
