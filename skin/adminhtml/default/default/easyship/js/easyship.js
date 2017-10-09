@@ -11,7 +11,7 @@ Easyship.prototype.postRegistration =  function (url, storeid) {
                 console.log(transport);
                 if (transport.status == 200) {
                     var redirectUrl = transport['responseJSON'].redirect_url;
-                    window.open(redirectUrl);
+                    window.open(redirectUrl, "_self");
                 }
 
 

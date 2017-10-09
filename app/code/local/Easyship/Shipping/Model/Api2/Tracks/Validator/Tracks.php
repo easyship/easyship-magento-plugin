@@ -16,6 +16,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
     {
         try {
             $this->_validateAttributeSet($data);
+            $this->_validateOrderIncrementId($data);
             $this->_validateShipmentIncrementId($data);
             $this->_validateCarrier($data);
             $this->_validateTitle($data);
@@ -51,6 +52,21 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         if (!isset($data['track']['trackNumber']) || empty($data['track']['trackNumber'])) {
             $this->_critical('Missing Shipment Track Number in request.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
+    }
+
+    protected function _validateOrderIncrementId($data)
+    {
+        $orderIncrementId = $data['track']['orderIncrementId'];
+
+        if (!is_string($orderIncrementId)) {
+            $this->_critical('Order Increment Id is not a string in request.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST );
+        }
+
+        $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
+        if (!$order->getId()) {
+            $this->_critical('Order does not exist.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+        }
+
     }
 
     protected function _validateShipmentIncrementId($data)
@@ -93,5 +109,10 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         if (!is_string($title)) {
             $this->addError('title is not a string in request');
         }
+    }
+
+    protected function _critical($message, $code)
+    {
+        throw new Mage_Api2_Exception($message, $code);
     }
 }

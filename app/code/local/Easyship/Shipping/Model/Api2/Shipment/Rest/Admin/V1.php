@@ -8,6 +8,9 @@ class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipp
             'operation' => self::OPERATION_CREATE
         ));
 
+        $orderIncrementId    = $this->getRequest()->getParam('orderincrementid');
+        $data['shipment']['orderIncrementId'] = $orderIncrementId;
+
         if (!$validator->isValidData($data)) {
             foreach ($validator->getErrors() as $error) {
                 $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);

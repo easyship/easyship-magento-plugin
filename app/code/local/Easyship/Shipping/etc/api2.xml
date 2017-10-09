@@ -395,7 +395,7 @@
                 </force_attributes>
                 <routes>
                     <route_entity>
-                        <route>/sales/:orderincrementd/shipments</route>
+                        <route>/sales/:orderincrementid/shipments</route>
                         <action_type>entity</action_type>
                     </route_entity>
                 </routes>

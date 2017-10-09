@@ -33,7 +33,7 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
 
     protected function _validateAttributeSet($data)
     {
-        if (!isset($data['shipment']) || empty($data['shipment'])) {
+        if (!isset($data['shipment'])) {
             $this->_critical('Missing Shipment attribute in request.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
 

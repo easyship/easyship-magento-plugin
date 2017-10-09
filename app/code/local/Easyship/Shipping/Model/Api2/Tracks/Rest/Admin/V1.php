@@ -36,6 +36,11 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
     public function _create(array $data)
     {
 
+        $orderIncrementId    = $this->getRequest()->getParam('orderincrementid');
+        $data['track']['orderIncrementId'] = $orderIncrementId;
+        $shipmentIncrementId = $this->getRequest()->getParam('shipmentincrementid');
+        $data['track']['shipmentIncrementId'] = $shipmentIncrementId;
+
         $validator = Mage::getModel('easyship/api2_tracks_validator_tracks', array(
             'operation' => self::OPERATION_CREATE
         ));

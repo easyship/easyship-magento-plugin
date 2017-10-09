@@ -6,7 +6,8 @@ class Easyship_Shipping_Model_Api2_Items_Rest_Admin_V1 extends Easyship_Shipping
     protected function _retrieve() 
     {
 
-        $orderId    = $this->getRequest()->getParam('id');
+        $orderIncrementId    = $this->getRequest()->getParam('orderincrementid');
+        $orderId = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId)->getId();
         $collection = $this->_getCollectionForSingleRetrieve($orderId);
 
         $order = $collection->getItemById($orderId);
