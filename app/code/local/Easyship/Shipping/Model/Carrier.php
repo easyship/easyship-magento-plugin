@@ -12,20 +12,45 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected $_rawRequest = null;
 
+
+    /**
+     * No method to specify for Mage_Shipping_Model_Carrier_Interface
+     *
+     * @return null
+     */
     public function getAllowedMethods() {
-        return array(
-            'easyship' => $this->getConfigData('allowed_methods')
-        );
+        return null;
     }
-    
+
+
+    /**
+     * helper method to get store configuration
+     *
+     * @param $code
+     * @return mixed
+     */
     protected function getStoreConfig( $code ) {
         return Mage::getStoreConfig( $this->_configCode . $code, $this->getStore() );
     }
 
+    /**
+     *
+     * Check config data if Rate API is active
+     *
+     * @param Mage_Shipping_Model_Rate_Request $request
+     * @return mixed
+     */
     protected function getActivate(Mage_Shipping_Model_Rate_Request $request) {
         $id = $request->getStoreId();
         return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', $this->getStore() );
     }
+
+    /**
+     * Collect Rates from this Carrier
+     *
+     * @param Mage_Shipping_Model_Rate_Request $request
+     * @return bool|false|Mage_Core_Model_Abstract
+     */
 
     public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
     {  
@@ -51,6 +76,13 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         return $result;
 
     }
+
+    /**
+     * Construct Request Body for Easyship API
+     *
+     * @param Mage_Shipping_Model_Rate_Request $request
+     * @return $this
+     */
 
     protected function _createEasyShipRequest(Mage_Shipping_Model_Rate_Request $request) {
 
@@ -154,10 +186,22 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
          return $this;
     }
 
+    /**
+     * Return Quote from Request
+     *
+     * @return bool|false|Mage_Core_Model_Abstract
+     */
+
     protected function _getQuotes()
     {
         return $this->_doRequest();
     }
+
+    /**
+     * Request Rate data from Easyship API
+     *
+     * @return bool|false|Mage_Core_Model_Abstract
+     */
 
     protected function _doRequest()
     {
@@ -194,7 +238,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         Mage::log( 'OK to connect:', null, 'easyship.log' );
 
         // Get Preferred Rates
-        $prefer_rates = $this->_prefer_rates( $rates['rates'] );
+        $prefer_rates = $rates['rates']; //$this->_prefer_rates( $rates['rates'] );
         Mage::log( 'Prefer Rates: ' . var_export( $prefer_rates, 1), null, 'easyship.log' );
         
         $result = Mage::getModel('shipping/rate_result');
@@ -213,9 +257,15 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         return $result;
     }
 
+    /**
+     *
+     * return prefer rates
+     *
+     * @param $rates Array of rates received from Easyship
+     * @return array
+     */
 
-
-    protected function _prefer_rates( $rates ) {
+    protected function _prefer_rates( array $rates ) {
 
         $prefer_rates = array();
         $lowest = 0;
@@ -242,19 +292,32 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         return $prefer_rates;
     }
 
+    /**
+     * Set Tracking is available for this carrier
+     *
+     * @return bool
+     */
     public function isTrackingAvailable()
     {
         return true;
     }
 
+
+    /**
+     * Display shipment tracking Information
+     *
+     * @param $trackings Tracking Number
+     * @return Mage_Shipping_Model_Tracking_Result | bool
+     */
     public function getTrackingInfo($trackings) {
+
         $result = Mage::getModel('shipping/tracking_result');
         $tracking = Mage::getModel('shipping/tracking_result_status');
         $tracking->setCarrier('easyship');
-        $tracking->setCarrierTitle('Easyship Shipping...');
+        $tracking->setCarrierTitle('Easyship Shipping');
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
-        $tracking->setUrl("http://192.168.99.100");
+        $tracking->setUrl("https://www.easyship.com/shipment-tracking/" . $trackings);
         $result->append($tracking);
 
         if ($tracks = $result->getAllTrackings()) {
