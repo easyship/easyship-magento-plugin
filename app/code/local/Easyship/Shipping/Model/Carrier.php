@@ -171,7 +171,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
                       'length' => $length,
                       'category' => $category,
                       'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                      'declared_customs_value' => (float)$_product->getFinalPrice()
+                      'declared_customs_value' => (float)$_product->getFinalPrice(),
+                      'sku' => $_product->getSku()
                   );
                 }
             }
@@ -214,7 +215,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
             $url = $this->getConfigData( 'easyship_api_url');
         }
 
-        $url = $url . '/rate/v1/rates';
+        $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);
         $client->setMethod(Varien_Http_Client::POST);
         $client->setHeaders(array(
@@ -244,52 +245,16 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         $result = Mage::getModel('shipping/rate_result');
         foreach ( $prefer_rates as $rate ) {
             $r = Mage::getModel( 'shipping/rate_result_method' );
-            $method_title = $rate['courier_name'] . ' (' . $rate['min_delivery_time'] . '-' . $rate['max_delivery_time'] . ' days)';
             $r->setCarrier( $this->_code );
             $r->setCarrierTitle( $this->getConfigData( 'title' ) );
             $r->setMethod( $rate['courier_id'] );
-            $r->setMethodTitle( $method_title );
+            $r->setMethodTitle( $rate['full_description'] );
             $r->setCost( $rate['total_charge'] );
             $r->setPrice( $rate['total_charge'] );
             $result->append($r);
         }
 
         return $result;
-    }
-
-    /**
-     *
-     * return prefer rates
-     *
-     * @param $rates Array of rates received from Easyship
-     * @return array
-     */
-
-    protected function _prefer_rates( array $rates ) {
-
-        $prefer_rates = array();
-        $lowest = 0;
-        $index = 0;
-
-        if ( empty( $rates ) ) {
-            return $prefer_rate;
-        }
-
-        foreach ($rates as $rate) {
-            if ( $rates[$lowest]['total_charge'] > $rate['total_charge'] ) {
-                $lowest = $index;
-            }
-            if ( $rate["delivery_time_rank"] == 1 ) {
-                $prefer_rates[$rate['courier_id']] = $rate;
-            }
-            if ( $rate["value_for_money_rank"] == 1 ) {
-                $prefer_rates[$rate['courier_id']] = $rate;
-            }
-            $index++;
-        }
-
-        $prefer_rates[$rates[$lowest]['courier_id']] = $rates[$lowest];
-        return $prefer_rates;
     }
 
     /**

@@ -46,7 +46,7 @@ Easyship.prototype.disableRate = function(url, storeid) {
             location.reload();
         },
         onFailure: function(transport) {
-            alert("Error: Fail to enable rate.  Please try again.");
+            alert("Error: Fail to disable rate.  Please try again.");
         }
     });
 }

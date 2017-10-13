@@ -153,6 +153,9 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '1', 'default', 0);
+                $response = $this->_doRateRequest($store_id,true);
+
+
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
@@ -179,6 +182,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '0', 'default', 0);
+                $response = $this->_doRateRequest($store_id, true);
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
@@ -192,5 +196,40 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
             $this->getResponse()->setHeader('Content-type', 'application/json', true);
             $this->getResponse()->setBody(json_encode($response));
         }
+    }
+
+
+    // make request to easyship
+    protected function _doRateRequest($store_id, $enable)
+    {
+        // Only for Dev
+        $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
+
+        // Only for Dev
+        if (!isset($url)) {
+            Mage::log('endpoint empty', null, 'easyship.log');
+            throw new Exception('Endpoint has not been set');
+        }
+        $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
+
+        $requestBody = array();
+        $requestBody['store'] = array();
+        $requestBody['store']['is_rates_enabled'] = $enable;
+
+        $client = new Varien_Http_Client($endpoint);
+        $client->setMethod(Varien_Http_Client::PUT);
+        $client->setHeaders(array(
+            'Content-Type' => 'application/json'
+        ));
+
+        $client->setRawData(json_encode($requestBody), null);
+        $response = $client->request('POST');
+
+//        if (!$response->isSuccessful()) {
+//            Mage::log('Fail to connect', null, 'easyship.log');
+//            throw new Exception('Cannot connect to easyship');
+//        }
+
+        return json_decode( $response->getBody(), true);
     }
 }
