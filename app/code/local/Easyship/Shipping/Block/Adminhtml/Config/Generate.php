@@ -21,46 +21,51 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
     {
 
         $id = $element->getHtmlId();
-        $html = '<td class="label"><label for="'.$id.'"><strong>Store Name: </strong>'.$element->getLabel().'</label></td>';
+        // $html = '<td class="label"><label for="'.$id.'"><strong>Store Name: </strong>'.$element->getLabel().'</label></td>';
 
-        //$isDefault = !$this->getRequest()->getParam('website') && !$this->getRequest()->getParam('store');
-        $isMultiple = $element->getExtType()==='multiple';
+        // //$isDefault = !$this->getRequest()->getParam('website') && !$this->getRequest()->getParam('store');
+        // $isMultiple = $element->getExtType()==='multiple';
 
-        // replace [value] with [inherit]
-        $namePrefix = preg_replace('#\[value\](\[\])?$#', '', $element->getName());
+        // // replace [value] with [inherit]
+        // $namePrefix = preg_replace('#\[value\](\[\])?$#', '', $element->getName());
 
-        $options = $element->getValues();
+        // $options = $element->getValues();
 
-        $addInheritCheckbox = false;
-        if ($element->getCanUseWebsiteValue()) {
-            $addInheritCheckbox = true;
-            $checkboxLabel = $this->__('Use Website');
-        }
-        elseif ($element->getCanUseDefaultValue()) {
-            $addInheritCheckbox = true;
-            $checkboxLabel = $this->__('Use Default');
-        }
+        // $addInheritCheckbox = false;
+        // if ($element->getCanUseWebsiteValue()) {
+        //     $addInheritCheckbox = true;
+        //     $checkboxLabel = $this->__('Use Website');
+        // }
+        // elseif ($element->getCanUseDefaultValue()) {
+        //     $addInheritCheckbox = true;
+        //     $checkboxLabel = $this->__('Use Default');
+        // }
 
-        if ($addInheritCheckbox) {
-            $inherit = $element->getInherit()==1 ? 'checked="checked"' : '';
-            if ($inherit) {
-                $element->setDisabled(true);
-            }
-        }
+        // if ($addInheritCheckbox) {
+        //     $inherit = $element->getInherit()==1 ? 'checked="checked"' : '';
+        //     if ($inherit) {
+        //         $element->setDisabled(true);
+        //     }
+        // }
 
-        if ($element->getTooltip()) {
-            $html .= '<td class="value with-tooltip">';
-            $html .= $this->_getElementHtml($element);
-            $html .= '<div class="field-tooltip"><div>' . $element->getTooltip() . '</div></div>';
-        } else {
-            $html .= '<td class="value">';
-            $html .= $this->_getElementHtml($element);
-        };
-        if ($element->getComment()) {
-            $html.= '<p class="note"><span>'.$element->getComment().'</span></p>';
-        }
-        $html.= '</td>';
+        // if ($element->getTooltip()) {
+        //     $html .= '<td class="value with-tooltip">';
+        //     $html .= $this->_getElementHtml($element);
+        //     $html .= '<div class="field-tooltip"><div>' . $element->getTooltip() . '</div></div>';
+        // } else {
+        //     $html .= '<td class="value">';
+        //     $html .= $this->_getElementHtml($element);
+        // };
+        // if ($element->getComment()) {
+        //     $html.= '<p class="note"><span>'.$element->getComment().'</span></p>';
+        // }
+        // $html.= '</td>';
 
+        $html = '<td class="label" colspan="2"><div id="easyship">';
+
+        $html .= $this->_getElementHtml($element);
+
+        $html .= '</div></td>';
         if ($addInheritCheckbox) {
 
             $defText = $element->getDefaultValue();
