@@ -2,16 +2,6 @@
 <config>
     <api2>
         <resource_groups>
-            <sales translate="title" module="api2">
-                <title>Sales</title>
-                <sort_order>130</sort_order>
-                <children>
-                    <sales_shipping translate="title" module="api2">
-                        <title>Shipping</title>
-                        <sort_order>150</sort_order>
-                    </sales_shipping>
-                </children>
-            </sales>
             <easyship translate="title" module="api2">
                 <title>Easyship</title>
                 <sort_order>140</sort_order>
@@ -19,7 +9,7 @@
         </resource_groups>
         <resources>
             <shipping translate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>20</sort_order>
                 <model>easyship/api2_shipping</model>
                 <title>Shipping Sales</title>
@@ -109,7 +99,7 @@
                 <versions>1</versions>
             </shipping>
             <ec_order translate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>20</sort_order>
                 <model>easyship/api2_items</model>
                 <title>Shipping Order</title>
@@ -209,7 +199,7 @@
                 <versions>1</versions>
             </ec_order>
             <ec_address tranlate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>40</sort_order>
                  <model>easyship/api2_shipping</model>
                 <title>Address</title>
@@ -240,7 +230,7 @@
                 </attributes>
             </ec_address>
             <ec_status_history tranlate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>40</sort_order>
                  <model>easyship/api2_shipping</model>
                 <title>Status History</title>
@@ -261,7 +251,7 @@
                 </attributes>
             </ec_status_history>
             <ec_payment translate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>40</sort_order>
                  <model>easyship/api2_shipping</model>
                 <title>Payment</title>
@@ -295,7 +285,7 @@
                 </attributes>
             </ec_payment>
             <ec_items>
-                 <group>sales_shipping</group>
+                 <group>easyship</group>
                 <sort_order>50</sort_order>
                  <model>easyship/api2_shipping</model>
                 <title>Items</title>
@@ -366,7 +356,7 @@
                 </attributes>
             </ec_items>
             <ec_shipments translate="title" module="api2">
-                <group>sales_shipping</group>
+                <group>easyship</group>
                 <sort_order>30</sort_order>
                 <model>easyship/api2_shipment</model>
                 <title> Shipments </title>
@@ -403,7 +393,7 @@
                 <versions>1</versions>
             </ec_shipments>
             <ec_shipment_item>
-                 <group>sales_shipping</group>
+                 <group>easyship</group>
                 <sort_order>30</sort_order>
                 <model>easyship/api2_shipment</model>
                 <title> Shipments Item </title> 
@@ -426,7 +416,7 @@
                 <versions>1</versions>
             </ec_shipment_item>
              <ec_shipment_comment>
-                 <group>sales_shipping</group>
+                 <group>easyship</group>
                 <sort_order>30</sort_order>
                 <model>easyship/api2_shipment</model>
                 <title> Shipments Comment </title> 
