@@ -55,7 +55,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
                     <li> 2. <strong>Set up Role</strong>:  Go to System > Web Services > REST - Roles, and Click Add Admin Role.  In Role API Resource tab, you can choose All or select everything under "easyship" in Custom Settings. </li>
                     <li> 3. <strong>Set up permission attributes</strong>: Go to System > Web Services > REST - Attributes, choose the Admin role you created in Step 2.  In ACL Attributes rule tab, You can choose All or select everything under "easyship" in Custom Settings. </li>
                     <li> 4. <strong>Add role to your admin user</strong>:  Go to System > Permission > Users, select a user who will manage Shipping Information.  In REST role tab, select the role you added in Step 2. </li>
-                    <li> 5. <strong>Connect each store with Easyship Account</strong>: Come back to this page to provision your store with your Easyship account.</li>
+                    <li> 5. <strong>Connect other stores stores Easyship Account</strong>: Return to this page to connect other stores to your Easyship account.</li>
                 </ol>     
                 </div>
                 
