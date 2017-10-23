@@ -20,7 +20,8 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
         }
 
         if ($setupready) {
-            $html .= $this->_getAciveFieldHtml($element);
+            // $html .= $this->_getAciveFieldHtml($element);
+            $html  .= '<h3>Here are stores we found in your settingss. Please select the store you want to setup with Easyship.</h3>';
             foreach (Mage::app()->getWebsites() as $website) {
                 foreach ($website->getGroups() as $webgroup) {
                     $stores = $webgroup->getStores();
@@ -47,7 +48,16 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
                  <div style="color:red; margin: 5px 0px;">OAuth Consumer named <strong> easyship</strong> is not found.  It is required to allow Easyship to retrieve information with Magento REST API. Please follow the instruction to setup your 
                  Easyship OAuth consumer.</div>
                  
-                 <div style="display:block; background-color: white; border: 1px solid black; padding: 5px 10px;"> Please go to <a href="https://www.easyship.com" target="_blank">https://www.easyship.com</a> for setup instruction.</div>
+                 <div style="display:block; background-color: white; border: 1px solid black; padding: 5px 10px;"> 
+                 <h3> Instruction </h3>
+                 <ol>
+                    <li> 1. <strong>Create new Oauth Consumer</strong>:  Go to System > Web Services > REST Oauth Consumers, and add a New consumer name "easyship". </li>
+                    <li> 2. <strong>Setup Role</strong>:  Go to System > Web Services > REST - Roles, and Click Add Admin Role.  In Role API Resource tab, you can choose All or select everything under "easyship" in Custom Settings. </li>
+                    <li> 3. <strong>Setup Attribute permission</strong>: Go to System > Web Services > REST - Attributes, choose the Admin role you created in Step 2.  In ACL Attributes rule tab, You can choose All or select everything under "easyship" in Custom Settings. </li>
+                    <li> 4. <strong>Add Role to your admin user</strong>:  Go to System > Permission > Users, select a user who will manage Shipping Information.  In REST role tab, select the role you added in Step 2. </li>
+                    <li> 5. <strong>Provision eash store with Easyship Account</strong>: Come back to this page to provision your store with your Easyship account.</li>
+                </ol>     
+                </div>
                 
                 ';
         return $html;

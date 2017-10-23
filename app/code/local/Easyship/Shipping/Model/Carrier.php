@@ -55,7 +55,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
     public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
     {  
         // Configuration setting will be not under carrier scope
-        if ( !$this->getConfigFlag('active') || !$this->getStoreConfig( 'active' ) || !$this->getActivate($request) )  {
+        if ( !$this->getConfigFlag('active') || !$this->getActivate($request) )  {
             return false;
         }
         $token_config = $this->_configCode . 'store_' . $request->getStoreId()  . '_token';
@@ -206,14 +206,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected function _doRequest()
     {
-        $env = Mage::getStoreConfig( 'easyship_options/ec_dev/env' , $this->getStore() );
-
-        if ($env) {
-            $url = $this->getConfigData( 'easyship_stage_api_url');
-        }
-        else {
-            $url = $this->getConfigData( 'easyship_api_url');
-        }
+        $url = $this->getConfigData( 'easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);

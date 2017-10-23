@@ -109,14 +109,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     // make request to easyship
     protected function _doRequest($store_id, $requestBody)
     {
-        // Only for Dev
-        $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
-
-        // Only for Dev
-        if (!isset($url)) {
-            Mage::log('endpoint empty', null, 'easyship.log');
-            throw new Exception('Endpoint has not been set');
-        }
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');       
         $endpoint = rtrim(trim($url), '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
@@ -144,7 +137,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     public function ajaxActivateAction()
     {
-        Mage::log('new activate request', null, 'easyship.log');
 
         $response = array();
         try {
@@ -202,14 +194,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     // make request to easyship
     protected function _doRateRequest($store_id, $enable)
     {
-        // Only for Dev
-        $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
-
-        // Only for Dev
-        if (!isset($url)) {
-            Mage::log('endpoint empty', null, 'easyship.log');
-            throw new Exception('Endpoint has not been set');
-        }
+       
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');       
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
 
         $requestBody = array();
@@ -225,10 +211,10 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         $client->setRawData(json_encode($requestBody), null);
         $response = $client->request('POST');
 
-//        if (!$response->isSuccessful()) {
-//            Mage::log('Fail to connect', null, 'easyship.log');
-//            throw new Exception('Cannot connect to easyship');
-//        }
+       if (!$response->isSuccessful()) {
+           Mage::log('Fail to set ', null, 'easyship.log');
+           //throw new Exception('Cannot connect to easyship');
+       }
 
         return json_decode( $response->getBody(), true);
     }
