@@ -172,7 +172,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '0', 'default', 0);
-                $response = $this->_doRateRequest($store_id, true);
+                $response = $this->_doRateRequest($store_id, false);
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
