@@ -209,7 +209,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         ));
 
         $client->setRawData(json_encode($requestBody), null);
-        $response = $client->request('POST');
+        $response = $client->request('PUT');
 
        if (!$response->isSuccessful()) {
            Mage::log('Fail to set ', null, 'easyship.log');
