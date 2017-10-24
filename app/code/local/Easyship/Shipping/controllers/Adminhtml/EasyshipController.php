@@ -200,7 +200,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         $requestBody['store'] = array();
         $requestBody['store']['is_rates_enabled'] = $enable;
 
-        $client = new Varien_Http_Client($endpoint);
+        $client = new Zend_Http_Client($endpoint);
         $client->setMethod(Varien_Http_Client::PUT);
         $client->setHeaders(array(
             'Content-Type' => 'application/json',
@@ -208,7 +208,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         ));
 
         $client->setRawData(json_encode($requestBody), null);
-
+        $response = $client->request('PUT');
+       
         if (isset($response)) {
             if (!$response->isSuccessful()) {
                 Mage::log('Fail to set ', null, 'easyship.log');
