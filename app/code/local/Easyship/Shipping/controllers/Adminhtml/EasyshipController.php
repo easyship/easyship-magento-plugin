@@ -193,10 +193,9 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     protected function _doRateRequest($store_id, $enable)
     {
        
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');     
-        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, $this->getStore()));  
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
+        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));  
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
-
         $requestBody = array();
         $requestBody['store'] = array();
         $requestBody['store']['is_rates_enabled'] = $enable;
@@ -209,13 +208,13 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         ));
 
         $client->setRawData(json_encode($requestBody), null);
-        $response = $client->request('PUT');
 
-       if (!$response->isSuccessful()) {
-           Mage::log('Fail to set ', null, 'easyship.log');
-           //throw new Exception('Cannot connect to easyship');
-       }
-
-        return json_decode( $response->getBody(), true);
+        if (isset($response)) {
+            if (!$response->isSuccessful()) {
+                Mage::log('Fail to set ', null, 'easyship.log');
+              //  throw new Exception('Cannot connect to easyship');
+            }
+        }
+       return array();
     }
 }
