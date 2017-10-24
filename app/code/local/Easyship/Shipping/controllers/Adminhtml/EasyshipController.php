@@ -146,8 +146,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '1', 'default', 0);
                 $response = $this->_doRateRequest($store_id,true);
-
-
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
@@ -195,7 +193,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     protected function _doRateRequest($store_id, $enable)
     {
        
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');       
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');     
+        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, $this->getStore()));  
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
 
         $requestBody = array();
@@ -205,7 +204,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         $client = new Varien_Http_Client($endpoint);
         $client->setMethod(Varien_Http_Client::PUT);
         $client->setHeaders(array(
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ));
 
         $client->setRawData(json_encode($requestBody), null);
