@@ -1,4 +1,11 @@
 <?php
+/** 
+ * Class Easyship_Shipping_Model_Api2_Shipping
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 
 class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource 
 {

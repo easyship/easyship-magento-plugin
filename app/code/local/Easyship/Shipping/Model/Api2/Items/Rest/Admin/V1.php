@@ -1,8 +1,17 @@
 <?php
-
+/** 
+ * Class Easyship_Shipping_Model_Api2_Items_Rest_Admin_V1
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 class Easyship_Shipping_Model_Api2_Items_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Items_Rest 
 {
-      // retrieve
+     /**
+      * Handle GET Request
+      * @return array
+      */
     protected function _retrieve() 
     {
 

@@ -1,13 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sunny
- * Date: 29/9/2017
- * Time: 2:25 PM
- */
+/** 
+ * Class Easyship_Shipping_Adminhtml_EasyshipController
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 
 class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Controller_Action
 {
+    /** 
+     * Start Easyship Registration Flow
+     */
     public function ajaxRegisterAction()
     {
         $response = array();
@@ -46,6 +50,11 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         }
     }
 
+    /** 
+     *  Retriver OAuth Consumer Information 
+     * 
+     *  @return array
+     */
     protected function _getOAuthInfo()
     {
         $response = array();
@@ -63,6 +72,11 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         throw new Exception('Easyship consumer not found');
     }
 
+    /** 
+     * Retrieve Current User Information
+     * @param int $store_id   Store Id for current store
+     * @return array
+     */
     protected function _getUserInfo($store_id)
     {
         // get current user information
@@ -80,6 +94,11 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         return $response;
     }
 
+    /** 
+     * Retrieve Compoany Information
+     * @param int $store_id   Store Id for current store
+     * @return array
+     */
     protected function _getCompanyInfo($store_id)
     {
         $response = array();
@@ -89,6 +108,11 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         return $response;
     }
 
+    /**
+     * Retrieve Store Information
+     * @param int $store_id   Store Id for current store
+     * @return array
+     */
     protected function _getStoreInfo($store_id)
     {
         $store = Mage::getModel('core/store')->load($store_id);
@@ -106,17 +130,17 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     }
 
 
-    // make request to easyship
+    /**
+     * start a registration request to Easyship
+     * 
+     * @param int $store_id  Store Id for current store
+     * @param array $requestBody  Request body
+     * 
+     * @return array
+     */
     protected function _doRequest($store_id, $requestBody)
     {
-        // Only for Dev
-        $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
-
-        // Only for Dev
-        if (!isset($url)) {
-            Mage::log('endpoint empty', null, 'easyship.log');
-            throw new Exception('Endpoint has not been set');
-        }
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');       
         $endpoint = rtrim(trim($url), '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
@@ -129,23 +153,30 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         $response = $client->request('POST');
 
         if (!$response->isSuccessful()) {
-            Mage::log('Fail to connect', null, 'easyship.log');
-            throw new Exception('Cannot connect to easyship');
+            Mage::log( 'Fail to connect', null, 'easyship.log' );
+            throw new Exception( 'Cannot connect to easyship' );
         }
 
-        return json_decode( $response->getBody(), true);
+        return json_decode( $response->getBody(), true );
     }
 
+
+    /**
+     * Restrict to Admin session 
+     * 
+     */
     protected function _isAllowed()
     {
-        $adminSession = Mage::getSingleton('admin/session');
-        return true; //$adminSession->isAllowed('easyship_shipping/easyship');
+        $adminSession = Mage::getSingleton( 'admin/session' );
+        return $adminSession->isAllowed( 'system/config' );
     }
 
+    /**
+     * Activate Easyship RATE API
+     * 
+     */
     public function ajaxActivateAction()
     {
-        Mage::log('new activate request', null, 'easyship.log');
-
         $response = array();
         try {
             if ($this->getRequest()->isPost()) {
@@ -154,8 +185,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '1', 'default', 0);
                 $response = $this->_doRateRequest($store_id,true);
-
-
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
@@ -172,17 +201,19 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         }
     }
 
+    /**
+     * Deactivate Easyship RATE API
+     * 
+     */
     public function ajaxDeactivateAction()
     {
-        Mage::log('new deactivate request', null, 'easyship.log');
         $response = array();
         try {
             if ($this->getRequest()->isPost()) {
-
                 $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '0', 'default', 0);
-                $response = $this->_doRateRequest($store_id, true);
+                $response = $this->_doRateRequest($store_id, false);
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
                 $this->getResponse()->setBody(json_encode($response));
@@ -199,37 +230,40 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     }
 
 
-    // make request to easyship
+    /**
+     * Flag to Easyship when User activate/deactivate Rate API
+     * 
+     * @param int $store_id  Store ID
+     * @param bool $enable   activate flag
+     * 
+     * @return array
+     */
     protected function _doRateRequest($store_id, $enable)
     {
-        // Only for Dev
-        $url = Mage::getStoreConfig('easyship_options/ec_dev/endpoint', $store_id);
-
-        // Only for Dev
-        if (!isset($url)) {
-            Mage::log('endpoint empty', null, 'easyship.log');
-            throw new Exception('Endpoint has not been set');
-        }
+       
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
+        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));  
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
-
         $requestBody = array();
         $requestBody['store'] = array();
         $requestBody['store']['is_rates_enabled'] = $enable;
 
-        $client = new Varien_Http_Client($endpoint);
+        $client = new Zend_Http_Client($endpoint);
         $client->setMethod(Varien_Http_Client::PUT);
         $client->setHeaders(array(
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ));
 
         $client->setRawData(json_encode($requestBody), null);
-        $response = $client->request('POST');
-
-//        if (!$response->isSuccessful()) {
-//            Mage::log('Fail to connect', null, 'easyship.log');
-//            throw new Exception('Cannot connect to easyship');
-//        }
-
-        return json_decode( $response->getBody(), true);
+        $response = $client->request('PUT');
+       
+        if (isset($response)) {
+            if (!$response->isSuccessful()) {
+                Mage::log('Fail to set ', null, 'easyship.log');
+              //  throw new Exception('Cannot connect to easyship');
+            }
+        }
+       return array();
     }
 }

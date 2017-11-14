@@ -1,7 +1,19 @@
 <?php
-
+/** 
+ * Class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Shipment_Rest
 {
+    /**
+     * Handle Post Request
+     * 
+     * @param array
+     * @return array
+     */
     protected function _create(array $data)
     {
         $validator = Mage::getModel('easyship/api2_shipment_validator_shipment', array(
@@ -37,7 +49,12 @@ class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipp
 
     }
 
-
+    /**
+     * Construct Shipment respond for Easyship API
+     * 
+     * @param Vairen_Object
+     * @return array
+     */
     protected function getShipmentCreateRespond($shipment)
     {
         $shipmentData = $shipment->getData();
@@ -52,6 +69,9 @@ class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipp
         return $shipmentData;
     }
 
+    /**
+     * Override dispatch method for unsupported method
+     */
     public function dispatch()
     {
         switch ($this->getActionType() . $this->getOperation()) {

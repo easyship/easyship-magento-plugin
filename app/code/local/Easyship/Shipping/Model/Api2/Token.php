@@ -1,7 +1,24 @@
 <?php
 
+/** 
+ * Class Easyship_Shipping_Model_Api2_Token
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
+
 class Easyship_Shipping_Model_Api2_Token extends Mage_Api2_Model_Resource
 {
+
+    /**
+     * Set Easyship Token for Store
+     * 
+     * @param int
+     * @param string
+     * 
+     * @return array
+     */
     protected function _createToken($storeId, $token)
     {
         $tokenPath = 'easyship_options/ec_shipping/store_' . $storeId . '_token';
