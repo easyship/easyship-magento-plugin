@@ -39,8 +39,6 @@
                 <title>Easyship</title>
                 <model>easyship/carrier</model>
                 <easyship_api_url>https://api.easyship.com</easyship_api_url>
-                <easyship_stage_api_url>https://api-staging.easyship.com</easyship_stage_api_url>
-                <token backend_model="adminhtml/system_config_backend_encrypted" />
                 <shipment_requesttype>0</shipment_requesttype>
             </easyship>    
         </carriers>

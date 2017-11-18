@@ -1,9 +1,19 @@
 <?php
+/** 
+ * Class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 
 class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Model_Resource_Validator
 {
     protected $_operation = null;
 
+    /**
+     * constructor
+     */
     public function __construct($options)
     {
         if (!isset($options['operation']) || empty($options['operation'])) {
@@ -12,6 +22,13 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         $this->_operation = $options['operation'];
     }
 
+    /**
+     * Validate input data
+     * 
+     * @param array
+     * 
+     * @return boolean
+     */
     public function isValidData(array $data)
     {
         try {
@@ -31,6 +48,12 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         return $isStatisfied;
     }
 
+    /** 
+     * Validate Attributes set
+     * 
+     * @param array
+     * 
+     */
     protected function _validateAttributeSet($data)
     {
         if (!isset($data['track']) || empty($data['track'])) {
@@ -54,6 +77,9 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Validate Order Increment Id if exist
+     */
     protected function _validateOrderIncrementId($data)
     {
         $shipmentIncrementId = $data['track']['shipmentIncrementId'];
@@ -68,6 +94,9 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Validate if Shipment Increment Id exist
+     */
     protected function _validateShipmentIncrementId($data)
     {
         $shipmentIncrementId = $data['track']['shipmentIncrementId'];
@@ -83,6 +112,10 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Validate if carrier is string
+     * @param array
+     */
     protected function _validateCarrier($data)
     {
         $carrier = $data['track']['carrier'];
@@ -92,6 +125,10 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Validate if Tracking Number is string
+     * @param array
+     */
     protected function _valiedateTrackNumber($data)
     {
         $number = $data['track']['trackNumber'];
@@ -101,6 +138,10 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Validate if Title is string
+     * @param array
+     */
     protected function _validateTitle($data)
     {
         $title = $data['track']['title'];
@@ -110,6 +151,10 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         }
     }
 
+    /**
+     * Throw execption with message if validation fail 
+     *
+     */
     protected function _critical($message, $code)
     {
         throw new Mage_Api2_Exception($message, $code);

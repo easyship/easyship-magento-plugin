@@ -1,4 +1,11 @@
 <?php
+/** 
+ * Class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment
+ * Author: Easyship
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
+ * Autho URI: https://www.easyship.com 
+*/
 
 class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2_Model_Resource_Validator
 {
@@ -12,6 +19,13 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         $this->_operation = $options['operation'];
     }
 
+    /** 
+     * Validate the input body
+     * 
+     * @param array
+     * 
+     * @return boolean
+     */
     public function isValidData(array $data)
     {
         try {
@@ -31,6 +45,10 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         return $isStatisfied;
     }
 
+    /**
+     * Validate the attribute set
+     * @param array
+     */
     protected function _validateAttributeSet($data)
     {
         if (!isset($data['shipment'])) {
@@ -42,6 +60,10 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+    /** 
+     * Validate Order Incremnet Id
+     * @param array
+     */
     protected function _validateOrderIncrementId($data)
     {
         $orderIncrementId = $data['shipment']['orderIncrementId'];
@@ -60,6 +82,10 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+    /**
+     * Validate if OrderItemQty is number
+     * @param array
+     */
     protected function _validateOrderItemQty($data)
     {
         $orderItemQty = $data['shipment']['itemQty'];
@@ -81,6 +107,11 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+
+    /**
+     * Validate if Comment is string
+     * @param array
+     */
     protected function _validateComment($data)
     {
         $comment = $data['shipment']['comment'];
@@ -94,6 +125,10 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+    /**
+     * Validate Email Address
+     * @param array
+     */
     protected function _validateEmail($data)
     {
         $email = $data['shipment']['email'];
@@ -107,6 +142,9 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+    /**
+     * Valudate if includecomment is integer
+     */
     protected function _validateIncludeCommnet($data)
     {
         $includeComment = $data['shipment']['includeComment'];
@@ -120,6 +158,9 @@ class Easyship_Shipping_Model_Api2_Shipment_Validator_Shipment extends Mage_Api2
         }
     }
 
+    /**
+     * throw exception with message if validation fail
+     */
     protected function _critical($message, $code)
     {
         throw new Mage_Api2_Exception($message, $code);
