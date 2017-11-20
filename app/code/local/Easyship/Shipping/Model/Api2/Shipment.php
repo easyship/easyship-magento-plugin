@@ -1,13 +1,13 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Shipment
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
-class Easyship_Shipping_Model_Api2_Shipment extends Mage_Api2_Model_Resource 
+class Easyship_Shipping_Model_Api2_Shipment extends Mage_Api2_Model_Resource
 {
 
     protected function _prepareItemQtyData($data)
@@ -50,7 +50,7 @@ class Easyship_Shipping_Model_Api2_Shipment extends Mage_Api2_Model_Resource
         return null;
     }
 
-    protected function _getCollectionForSingleRetrieve($shipmentId) 
+    protected function _getCollectionForSingleRetrieve($shipmentId)
     {
         $collection = Mage::getResourceModel('sales/order_shipment_collection');
 

@@ -1,10 +1,10 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Tracks_Rest
@@ -12,7 +12,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
 
     /**
      * Override dispatch function for API Request
-     * 
+     *
      */
     public function dispatch()
     {
@@ -47,9 +47,9 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
 
     /**
      * HANDLE POST Request for Track API
-     * 
+     *
      * @param array
-     * 
+     *
      * @return array
      */
     public function _create(array $data)
@@ -76,7 +76,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
 
         $trackData = array();
         $trackData['track'] = array();
-       
+
         $trackData['track']['shipment_id'] = $track['parent_id'];
         $trackData['track']['created_at'] = $track['created_at'];
         $trackData['track']['updated_at'] = $track['updated_at'];

@@ -16,7 +16,7 @@
             <easyship_setup>
                 <setup>
                     <module>Easyship_Shipping</module>
-                </setup>    
+                </setup>
             </easyship_setup>
         </resources>
         <helpers>
@@ -40,7 +40,7 @@
                 <model>easyship/carrier</model>
                 <easyship_api_url>https://api.easyship.com</easyship_api_url>
                 <shipment_requesttype>0</shipment_requesttype>
-            </easyship>    
+            </easyship>
         </carriers>
     </default>
     <adminhtml>

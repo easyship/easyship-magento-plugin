@@ -1,17 +1,17 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Token_Rest_Admin_V1
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Model_Api2_Token_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Token
 {
     /**
      * Override dispatch function to handle Post request for Entity type
-     * 
+     *
      */
     public function dispatch()
     {
@@ -46,9 +46,9 @@ class Easyship_Shipping_Model_Api2_Token_Rest_Admin_V1 extends Easyship_Shipping
 
     /**
      * Handle POST Request
-     * 
+     *
      * @param array
-     * 
+     *
      * @return array
      */
     public function _create(array $data)

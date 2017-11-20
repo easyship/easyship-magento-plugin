@@ -1,15 +1,15 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Adminhtml_EasyshipController
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Controller_Action
 {
-    /** 
+    /**
      * Start Easyship Registration Flow
      */
     public function ajaxRegisterAction()
@@ -50,9 +50,9 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         }
     }
 
-    /** 
-     *  Retriver OAuth Consumer Information 
-     * 
+    /**
+     *  Retriver OAuth Consumer Information
+     *
      *  @return array
      */
     protected function _getOAuthInfo()
@@ -72,7 +72,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         throw new Exception('Easyship consumer not found');
     }
 
-    /** 
+    /**
      * Retrieve Current User Information
      * @param int $store_id   Store Id for current store
      * @return array
@@ -94,7 +94,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         return $response;
     }
 
-    /** 
+    /**
      * Retrieve Compoany Information
      * @param int $store_id   Store Id for current store
      * @return array
@@ -132,15 +132,15 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     /**
      * start a registration request to Easyship
-     * 
+     *
      * @param int $store_id  Store Id for current store
      * @param array $requestBody  Request body
-     * 
+     *
      * @return array
      */
     protected function _doRequest($store_id, $requestBody)
     {
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');       
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
         $endpoint = rtrim(trim($url), '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
@@ -162,8 +162,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
 
     /**
-     * Restrict to Admin session 
-     * 
+     * Restrict to Admin session
+     *
      */
     protected function _isAllowed()
     {
@@ -173,7 +173,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     /**
      * Activate Easyship RATE API
-     * 
+     *
      */
     public function ajaxActivateAction()
     {
@@ -203,7 +203,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     /**
      * Deactivate Easyship RATE API
-     * 
+     *
      */
     public function ajaxDeactivateAction()
     {
@@ -232,17 +232,17 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     /**
      * Flag to Easyship when User activate/deactivate Rate API
-     * 
+     *
      * @param int $store_id  Store ID
      * @param bool $enable   activate flag
-     * 
+     *
      * @return array
      */
     protected function _doRateRequest($store_id, $enable)
     {
-       
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
-        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));  
+
+        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
+        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
         $requestBody = array();
         $requestBody['store'] = array();
@@ -257,7 +257,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
         $client->setRawData(json_encode($requestBody), null);
         $response = $client->request('PUT');
-       
+
         if (isset($response)) {
             if (!$response->isSuccessful()) {
                 Mage::log('Fail to set ', null, 'easyship.log');

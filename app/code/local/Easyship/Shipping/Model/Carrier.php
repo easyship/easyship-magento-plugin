@@ -1,14 +1,14 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Carrier
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 
-class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface 
+class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface
 {
     protected $_code = 'easyship';
 
@@ -60,8 +60,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @return bool|false|Mage_Core_Model_Abstract
      */
 
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
-    {  
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
+    {
         // Configuration setting will be not under carrier scope
         if ( !$this->getConfigFlag('active') || !$this->getActivate($request) )  {
             return false;
@@ -78,9 +78,9 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         // create Easyship Request Body
         $this->_createEasyShipRequest( $request );
 
-        $result = $this->_getQuotes();    
+        $result = $this->_getQuotes();
 
-        Mage::log( 'Shipping Rates: ' . var_export( $result, 1), null, 'easyship.log' );    
+        Mage::log( 'Shipping Rates: ' . var_export( $result, 1), null, 'easyship.log' );
         return $result;
 
     }
@@ -185,13 +185,13 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
                 }
             }
          }
-      
+
          $r->setItems($items);
 
          $this->_rawRequest = $r;
 
          Mage::log( '_rawRequest: ' . $this->_rawRequest->toJson(), null, 'easyship.log');
-         
+
          return $this;
     }
 
@@ -234,7 +234,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
             Mage::log( var_export( $response, 1), null, 'easyship.log');
             return false;
         }
-        
+
         // decode JSON respond
         $rates = json_decode( $response->getBody(), true );
         Mage::log( 'OK to connect:', null, 'easyship.log' );
@@ -242,7 +242,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         // Get Preferred Rates
         $prefer_rates = $rates['rates']; //$this->_prefer_rates( $rates['rates'] );
         Mage::log( 'Prefer Rates: ' . var_export( $prefer_rates, 1), null, 'easyship.log' );
-        
+
         $result = Mage::getModel('shipping/rate_result');
         foreach ( $prefer_rates as $rate ) {
             $r = Mage::getModel( 'shipping/rate_result_method' );
@@ -283,7 +283,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         $tracking->setCarrierTitle('Easyship Shipping');
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
-        $tracking->setUrl("https://www.easyship.com/shipment-tracking/" . $trackings);
+        $tracking->setUrl("https://www.trackmyshipment.co/shipment-tracking/" . $trackings);
         $result->append($tracking);
 
         if ($tracks = $result->getAllTrackings()) {

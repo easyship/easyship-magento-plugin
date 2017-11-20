@@ -1,10 +1,10 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Block_Adminhtml_Config_Connect
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Block_System_Config_Form_Fieldset
@@ -12,7 +12,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
 
     /**
      * Rendering the Form Field
-     * 
+     *
      * @param Varien_Data_Form_Element_Abstract
      * @return string
      */
@@ -56,19 +56,19 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
     }
 
     /**
-     * Return an Instruction html text for first time user 
-     *  
+     * Return an Instruction html text for first time user
+     *
      * @return string
-     * 
+     *
      */
     protected function getInstruction()
     {
         $html = '
                   <h3>Easyship Plugin Setup Requirement</h3>
-                 <div style="color:red; margin: 5px 0px;">OAuth Consumer named <strong> easyship</strong> is not found.  It is required to allow Easyship to retrieve information with Magento REST API. Please follow the instruction to setup your 
+                 <div style="color:red; margin: 5px 0px;">OAuth Consumer named <strong> easyship</strong> is not found.  It is required to allow Easyship to retrieve information with Magento REST API. Please follow the instruction to setup your
                  Easyship OAuth consumer.</div>
-                 
-                 <div style="display:block; background-color: white; border: 1px solid black; padding: 5px 10px;"> 
+
+                 <div style="display:block; background-color: white; border: 1px solid black; padding: 5px 10px;">
                  <h3> Instructions </h3>
                  <ol>
                     <li> 1. <strong>Create new Oauth Consumer</strong>:  Go to System > Web Services > REST Oauth Consumers, and create a new consumer name "easyship". </li>
@@ -77,9 +77,9 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
                     <li> 4. <strong>Add role to your admin user</strong>:  Go to System > Permission > Users, select a user who will manage Shipping Information.  In REST role tab, select the role you added in Step 2. </li>
                     <li> 5. <strong>Connect your stores to Easyship</strong>: Go to System > Configuration > Easyship Settings > Activate Plugin.</li>
                     <li> 6. <strong>Register</strong>: Go through the registration flow.</li>
-                </ol>     
+                </ol>
                 </div>
-                
+
                 ';
         return $html;
 
@@ -87,7 +87,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
 
     /**
      * Render a field from custom template
-     * 
+     *
      * @return Mage_BlocMage_Adminhtml_Block_System_Config_Form_Field
      */
     protected function _getFieldRenderer()
@@ -101,9 +101,9 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
     /**
      * Not used for production
      * create default value for dropdown menu
-     * 
+     *
      * @return array
-     * 
+     *
      */
     protected function _getValues()
     {
@@ -119,7 +119,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
     /**
      * Not used for production
      * create enable field for Plugin
-     * 
+     *
      * @return string
      */
 
@@ -156,10 +156,10 @@ class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Bl
 
     /**
      * Prepare Custom HTML template for field
-     * 
+     *
      * @param Mage_Adminhtml_Block_System_Config_Form_Fieldset
      * @param Mage_Core_Model_Store
-     * 
+     *
      * @return string
      */
     protected function _getFieldHtml($fieldset, Mage_Core_Model_Store $store)

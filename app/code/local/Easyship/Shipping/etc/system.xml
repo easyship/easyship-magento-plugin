@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config>
-    
+
     <tabs>
         <easyship_shipping translate="label" module="easyship">
             <label>Easyship</label>

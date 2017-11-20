@@ -54,7 +54,7 @@
 #easyship .flex-container {
     display: flex;
     flex-direction: row;
-    padding: 10px 20px; 
+    padding: 10px 20px;
 }
 
 #easyship .statuscontainer {
@@ -68,7 +68,7 @@
     font-size: 14px;
     color: #837676;
     margin: 5px 0px;
-    
+
 }
 
 #easyship .statusLabel {

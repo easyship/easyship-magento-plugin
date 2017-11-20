@@ -1,10 +1,10 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Model_Resource_Validator
@@ -24,9 +24,9 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
 
     /**
      * Validate input data
-     * 
+     *
      * @param array
-     * 
+     *
      * @return boolean
      */
     public function isValidData(array $data)
@@ -38,7 +38,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
             $this->_validateCarrier($data);
             $this->_validateTitle($data);
             $this->_valiedateTrackNumber($data);
-            $isStatisfied = count($this->getErrors()) == 0; 
+            $isStatisfied = count($this->getErrors()) == 0;
         }
         catch (Mage_Api2_Exception $e) {
             $this->_addError($e->getMessage());
@@ -48,11 +48,11 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         return $isStatisfied;
     }
 
-    /** 
+    /**
      * Validate Attributes set
-     * 
+     *
      * @param array
-     * 
+     *
      */
     protected function _validateAttributeSet($data)
     {
@@ -152,7 +152,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
     }
 
     /**
-     * Throw execption with message if validation fail 
+     * Throw execption with message if validation fail
      *
      */
     protected function _critical($message, $code)

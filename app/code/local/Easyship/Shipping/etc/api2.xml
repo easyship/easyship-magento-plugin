@@ -16,7 +16,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message" module="api2">
                     <increment_id>Increment ID</increment_id>
@@ -86,7 +86,7 @@
                     <entity_id>Order ID</entity_id>
                     <gift_message_id>Gift Message ID</gift_message_id>
                     <gift_message>Gift Message</gift_message>
-                </attributes>             
+                </attributes>
                  <force_attributes>
                     <admin>
                         <page>1</page>
@@ -99,7 +99,7 @@
                     <route_entity>
                         <route>/sales</route>
                         <action_type>entity</action_type>
-                    </route_entity>    
+                    </route_entity>
                 </routes>
                 <versions>1</versions>
             </shipping>
@@ -111,7 +111,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message" module="api2">
                     <increment_id>Increment ID</increment_id>
@@ -181,7 +181,7 @@
                     <entity_id>Order ID</entity_id>
                     <gift_message_id>Gift Message ID</gift_message_id>
                     <gift_message>Gift Message</gift_message>
-                </attributes>             
+                </attributes>
                 <force_attributes>
                     <admin>
                         <payment>1</payment>
@@ -190,7 +190,7 @@
                         <status_history>1</status_history>
                         <shipments>1</shipments>
                     </admin>
-                </force_attributes> 
+                </force_attributes>
                 <routes>
                     <route_entity>
                         <route>/sales/:orderincrementid</route>
@@ -211,7 +211,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="increment_id parent_id created_at updated_at is_active address_type firstname lastname company street city region postcode country_id telephone fax region_id address_id" module="api2" >
                     <increment_id>Increment ID</increment_id>
@@ -242,7 +242,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="increment_id parent_id created_at updated_at is_active is_customer_notified status comment" module="api2" >
                      <increment_id>Increment ID</increment_id>
@@ -263,7 +263,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="increment_id parent_id created_at updated_at is_active amount_ordered shipping_amount base_amount_ordered base_shipping_amount method po_number cc_type cc_number_enc cc_last4 cc_owner cc_exp_month cc_exp_year cc_ss_start_month cc_ss_start_year payment_id" module="api2">
                     <increment_id>Increment ID</increment_id>
@@ -297,7 +297,7 @@
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="item_id order_id quote_item_id created_at updated_at product_id product_type product_options weight is_virtual sku name applied_rule_ids free_shipping is_qty_decimal no_discount qty_canceled qty_invoced qty_ordered qty_refunded qty_shipped cost price base_price original_price base_original_price tax_percent tax_amount base_tax_amount tax_invoiced base_tax_invoiced discount_percent discount_amount base_discount_amount discount_invoiced base_discount_invoiced amount_refunded base_amount_refunded row_total base_row_total row_invoiced base_row_invoiced row_weight gift_message_id gift_message gift_message_available base_tax_before_discount tax_before_discount weee_tax_applied weee_tax_applied_amount weee_tax_applied_row_amount base_weeee_tax_applied_amount base_weee_tax_applied_row_amount weee_tax_disposition weee_tax_row_disposition base_weee_tax_disposition base_weee_tax_row_disposition" module="api2">
                     <item_id>Item ID</item_id>
@@ -402,11 +402,11 @@
                  <group>easyship</group>
                 <sort_order>30</sort_order>
                 <model>easyship/api2_shipment</model>
-                <title> Shipments Item </title> 
+                <title> Shipments Item </title>
                   <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="parent_id sku name order_item_id product_id weight price qty item_id" module="api2">
                     <parent_id>Parent ID</parent_id>
@@ -425,11 +425,11 @@
                  <group>easyship</group>
                 <sort_order>30</sort_order>
                 <model>easyship/api2_shipment</model>
-                <title> Shipments Comment </title> 
+                <title> Shipments Comment </title>
                   <privileges>
                     <admin>
                         <retrieve>1</retrieve>
-                    </admin>    
+                    </admin>
                 </privileges>
                 <attributes translate="parent_id created_at  comment is_customer_notified commend_id" module="api2">
                     <parent_id>Parent ID</parent_id>

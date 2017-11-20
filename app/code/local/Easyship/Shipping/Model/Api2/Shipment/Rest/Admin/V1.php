@@ -1,16 +1,16 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Shipment_Rest
 {
     /**
      * Handle Post Request
-     * 
+     *
      * @param array
      * @return array
      */
@@ -30,7 +30,7 @@ class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipp
             $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
         }
 
-        $shipmentId = $this->_createShipment($data['shipment']['orderIncrementId'], 
+        $shipmentId = $this->_createShipment($data['shipment']['orderIncrementId'],
                 $data['shipment']['itemsQty'], $data['shipment']['comment'],$data['shipment']['email'],
                 $data['shipment']['includeComment']);
 
@@ -51,7 +51,7 @@ class Easyship_Shipping_Model_Api2_Shipment_Rest_Admin_V1 extends Easyship_Shipp
 
     /**
      * Construct Shipment respond for Easyship API
-     * 
+     *
      * @param Vairen_Object
      * @return array
      */

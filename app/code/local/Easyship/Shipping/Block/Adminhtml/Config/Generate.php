@@ -1,13 +1,13 @@
 <?php
-/** 
- * Class Easyship_Shipping_Block_Adminhtml_Config_Generate 
+/**
+ * Class Easyship_Shipping_Block_Adminhtml_Config_Generate
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
-class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_Block_System_Config_Form_Field 
+class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_Block_System_Config_Form_Field
 {
 
     /**
@@ -21,7 +21,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
 
     /**
      * Prepare Layout for the field
-     * 
+     *
      * @return Mage_Adminhtml_Block_System_Config_Form_Field
      */
     protected function _prepareLayout()
@@ -35,7 +35,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
 
     /**
      * Render function for the Field
-     * 
+     *
      * @param Vairen_Data_Form_element_Abstract
      * @return string
      */
@@ -102,9 +102,9 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
     }
 
 
-    /** 
-     * populate configuration data to HTML 
-     * 
+    /**
+     * populate configuration data to HTML
+     *
      * @param Vairen_Data_From_Element_Abstract
      * @return string
      */

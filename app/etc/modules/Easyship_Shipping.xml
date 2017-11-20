@@ -4,6 +4,6 @@
         <Easyship_Shipping>
             <active>true</active>
             <codePool>local</codePool>
-        </Easyship_Shipping> 
+        </Easyship_Shipping>
     </modules>
 </config>

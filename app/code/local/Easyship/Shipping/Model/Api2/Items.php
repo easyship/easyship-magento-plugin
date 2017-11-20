@@ -1,18 +1,18 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Api2_Items
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com 
+ * Autho URI: https://www.easyship.com
 */
 
-class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource 
+class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
 {
       /**#@+
      * Parameters' names in config with special ACL meaning
      */
-    
+
     const PARAM_PAYMENT_METHOD = 'payment';
 
     /**
@@ -40,7 +40,7 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
     {
         /** @var $collection Mage_Sales_Model_Resource_Order_Collection */
         $collection = Mage::getResourceModel('sales/order_collection');
-     
+
         return $collection->addFieldToFilter($collection->getResource()->getIdFieldName(), $orderId);
     }
 
@@ -78,7 +78,7 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
      * @param array $orderIds Orders identifiers
      * @return array
      */
-    protected function _getPayment(array $orderIds) 
+    protected function _getPayment(array $orderIds)
     {
         $payments = array();
 
@@ -98,7 +98,7 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
      * @param array $orderIds Orders' identifiers
      * @return Mage_Sales_Model_Resource_Order_Payment_Collection|Object
      */
-    protected function _getPaymentCollection(array $orderIds) 
+    protected function _getPaymentCollection(array $orderIds)
     {
         $collection = Mage::getResourceModel('sales/order_payment_collection');
         $collection->setOrderFilter($orderIds);
@@ -117,9 +117,9 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
         $items = array();
 
         if ($this->_isSubCallAllowed('ec_items')) {
-           
+
             $itemsFilter = $this->_getSubModel('ec_items', array())->getFilter();
-           
+
             if ($itemsFilter->getAllowedAttributes()) {
                 /* @var $collection Mage_Sales_Model_Resource_Order_Item_Collection */
                 $collection = Mage::getResourceModel('sales/order_item_collection');
@@ -160,7 +160,7 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
         return $status_history;
     }
 
-   
+
     /**
      * Check payment method information is allowed
      *
@@ -229,4 +229,4 @@ class Easyship_Shipping_Model_Api2_Items extends Mage_Api2_Model_Resource
     }
 
 }
-   
+
