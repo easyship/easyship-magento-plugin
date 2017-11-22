@@ -62,9 +62,17 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
         foreach ($collection as $consumer) {
             if ($consumer->getName() == 'easyship') {
-
+                // check if using custom admin path
+                $route = ((bool)(string)Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_USE_CUSTOM_ADMIN_PATH))
+                ? Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_CUSTOM_ADMIN_PATH)
+                : Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_ADMINHTML_ROUTER_FRONTNAME);
+                
                 $response['consumer_key'] = $consumer->getKey();
                 $response['consumer_secret'] = $consumer->getSecret();
+                $response['request_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/initiate';
+                $response['request_authorize_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . $route[0] . '/oauth_authorize'; 
+                $response['request_access_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/token';
+                
                 return $response;
             }
         }
