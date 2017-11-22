@@ -4,7 +4,7 @@
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com
+ * Author URI: https://www.easyship.com
 */
 
 
@@ -214,7 +214,19 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected function _doRequest()
     {
-        $url = $this->getConfigData( 'easyship_api_url');
+        $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
+        if (isset($dev_env) && $dev_env) {
+            $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
+            if (!isset($url)) {
+                Mage::log('endpoint empty', null, 'easyship.log');
+                throw new Exception('Endpoint has not been set');
+            }
+        }
+        else {
+            $url = $this->getConfigData( 'easyship_api_url');
+        }   
+        
+        //$url = $this->getConfigData( 'easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);

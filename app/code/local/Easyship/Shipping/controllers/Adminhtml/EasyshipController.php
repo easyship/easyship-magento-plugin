@@ -4,7 +4,7 @@
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com
+ * Author URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Controller_Action
@@ -140,7 +140,19 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
      */
     protected function _doRequest($store_id, $requestBody)
     {
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
+         // use dev
+        $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
+        if (isset($dev_env) && $dev_env) {
+            $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
+            if (!isset($url)) {
+                Mage::log('endpoint empty', null, 'easyship.log');
+                throw new Exception('Endpoint has not been set');
+            }
+        }
+        else {
+            $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
+        }   
+
         $endpoint = rtrim(trim($url), '/') . '/api/v1/magento/registrations';
 
         $client = new Varien_Http_Client($endpoint);
@@ -240,8 +252,19 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
      */
     protected function _doRateRequest($store_id, $enable)
     {
-
-        $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
+        // use dev
+        $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
+        if (isset($dev_env) && $dev_env) {
+            $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
+            if (!isset($url)) {
+                Mage::log('endpoint empty', null, 'easyship.log');
+                throw new Exception('Endpoint has not been set');
+            }
+        }
+        else {
+            $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
+        }   
+        //$url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
         $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
         $requestBody = array();

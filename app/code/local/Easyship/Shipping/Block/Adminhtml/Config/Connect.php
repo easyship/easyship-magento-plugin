@@ -4,7 +4,7 @@
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com
+ * Author URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Block_Adminhtml_Config_Connect extends Mage_Adminhtml_Block_System_Config_Form_Fieldset
