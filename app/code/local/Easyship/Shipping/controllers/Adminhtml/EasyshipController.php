@@ -72,7 +72,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $response['request_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/initiate';
                 $response['request_authorize_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . $route[0] . '/oauth_authorize'; 
                 $response['request_access_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/token';
-                
+
                 return $response;
             }
         }
@@ -137,7 +137,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
     }
 
-
     /**
      * start a registration request to Easyship
      *
@@ -180,7 +179,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         return json_decode( $response->getBody(), true );
     }
 
-
+    
     /**
      * Restrict to Admin session
      *
@@ -272,7 +271,6 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         else {
             $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
         }   
-        //$url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
         $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
         $requestBody = array();
@@ -296,5 +294,44 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
             }
         }
        return array();
+    }
+
+    /**
+     * Reset the plugin
+     */
+    public function ajaxResetStoreAction()
+    {   
+        $response = array();
+
+        try {
+            if ($this->getRequest()->isPost()) {
+                $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
+                if (!isset($store_id)) {
+                    throw new Exception('store id is not set');
+                }
+                $tokenPath = 'easyship_options/ec_shipping/store_' . $store_id . '_token';
+                $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
+                $activatePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isExtActive';
+                Mage::getConfig()->deleteConfig($tokenPath);
+                Mage::getConfig()->saveConfig($enablePath);
+                Mage::getConfig()->saveConfig($activatePath);
+                $this->getResponse()->setHeader('Content-type', 'application/json', true);
+                $response['status'] = 'ok';
+                $this->getResponse()->setBody(json_encode($response));
+            
+            }
+            else {
+                throw new Exception('Method not supported');
+            }
+        }
+        catch (Exception $e) {
+            Mage::log($e->getMessage(), null, 'easyship.log');
+            $response['error'] = $e->getMessage();
+            $this->getResponse()->clearHeaders()->setHeader('HTTP/1.1', '400 Bad Request');
+            $this->getResponse()->setHeader('Status', 400);
+
+            $this->getResponse()->setHeader('Content-type', 'application/json', true);
+            $this->getResponse()->setBody(json_encode($response));
+        }
     }
 }
