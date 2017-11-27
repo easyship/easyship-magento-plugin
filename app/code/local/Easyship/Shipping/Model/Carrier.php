@@ -294,7 +294,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         $tracking->setCarrierTitle('Easyship Shipping');
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
-        $tracking->setUrl("https://www.easyship.com/shipment-tracking/" . $trackings);
+        $tracking->setUrl("https://www.trackmyshipment.co/shipment-tracking/" . $trackings);
         $result->append($tracking);
 
         if ($tracks = $result->getAllTrackings()) {
