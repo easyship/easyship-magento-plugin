@@ -214,18 +214,18 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected function _doRequest()
     {
-        $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
-        if (isset($dev_env) && $dev_env) {
-            $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
-            if (!isset($url)) {
-                Mage::log('endpoint empty', null, 'easyship.log');
-                throw new Exception('Endpoint has not been set');
-            }
-        }
-        else {
-            $url = $this->getConfigData( 'easyship_api_url');
-        }   
-        // $url = $this->getConfigData( 'easyship_api_url');
+        // $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
+        // if (isset($dev_env) && $dev_env) {
+        //     $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
+        //     if (!isset($url)) {
+        //         Mage::log('endpoint empty', null, 'easyship.log');
+        //         throw new Exception('Endpoint has not been set');
+        //     }
+        // }
+        // else {
+        //     $url = $this->getConfigData( 'easyship_api_url');
+        // }   
+        $url = $this->getConfigData( 'easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);
@@ -290,8 +290,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
         $result = Mage::getModel('shipping/tracking_result');
         $tracking = Mage::getModel('shipping/tracking_result_status');
-        $tracking->setCarrier('easyship');
-        $tracking->setCarrierTitle('Easyship Shipping');
+        $tracking->setCarrier( $this->_code );
+        $tracking->setCarrierTitle( $this->getConfigData( 'title' ) );
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
         $tracking->setUrl("https://www.trackmyshipment.co/shipment-tracking/" . $trackings);
