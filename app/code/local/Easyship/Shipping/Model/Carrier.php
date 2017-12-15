@@ -141,46 +141,12 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
                     continue;
                 }
 
-                $_product = Mage::getModel('catalog/product')->load( $item->getProductId() );
-
-                if ( $_product->getHeight() ) {
-                  $height = $_product->getHeight();
-                }
-                else {
-                  $height = 1;
-                }
-
-                if ( $_product->getWidth() ) {
-                  $width = $_product->getWidth();
-                }
-                else {
-                  $width = 1;
-                }
-
-                if ( $_product->getLength() ) {
-                  $length = $_product->getLength();
-                }
-                else {
-                  $length = 1;
-                }
-
-                if ( $_product->getCategory() ) {
-                  $category = $_product->getCategory();
-                }
-                else {
-                   $category = 'mobiles';
-                }
-
                 for ($i = 0; $i < $item->getQty(); $i++) {
                   $items[] = array(
-                      'actual_weight' => $_product->getWeight(),
-                    //   'height' => $height, // magento does not have dimension for product
-                    //   'width' => $width,
-                    //   'length' => $length,
-                    //   'category' => $category,
-                      'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                      'declared_customs_value' => (float)$_product->getFinalPrice(),
-                      'sku' => $_product->getSku()
+                    'actual_weight' =>  $item->getWeight(),
+                    'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
+                    'declared_customs_value' =>  (float) $item->getPrice(),
+                    'sku' =>  $item->getSku()
                   );
                 }
             }
@@ -214,18 +180,18 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
     protected function _doRequest()
     {
-        $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
-        if (isset($dev_env) && $dev_env) {
-            $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
-            if (!isset($url)) {
-                Mage::log('endpoint empty', null, 'easyship.log');
-                throw new Exception('Endpoint has not been set');
-            }
-        }
-        else {
-            $url = $this->getConfigData( 'easyship_api_url');
-        }   
-        // $url = $this->getConfigData( 'easyship_api_url');
+        // $dev_env = Mage::getStoreConfig('easyship_options/ec_dev/env');
+        // if (isset($dev_env) && $dev_env) {
+        //     $url = Mage::getStoreConfig( 'easyship_options/ec_dev/endpoint');
+        //     if (!isset($url)) {
+        //         Mage::log('endpoint empty', null, 'easyship.log');
+        //         throw new Exception('Endpoint has not been set');
+        //     }
+        // }
+        // else {
+        //     $url = $this->getConfigData( 'easyship_api_url');
+        // }   
+        $url = $this->getConfigData( 'easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);
@@ -290,8 +256,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
         $result = Mage::getModel('shipping/tracking_result');
         $tracking = Mage::getModel('shipping/tracking_result_status');
-        $tracking->setCarrier('easyship');
-        $tracking->setCarrierTitle('Easyship Shipping');
+        $tracking->setCarrier( $this->_code );
+        $tracking->setCarrierTitle( $this->getConfigData( 'title' ) );
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
         $tracking->setUrl("https://www.trackmyshipment.co/shipment-tracking/" . $trackings);

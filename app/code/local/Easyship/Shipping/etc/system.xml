@@ -27,7 +27,7 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                 </es_shipping>
-                <ec_dev translate="label" module="easyship">
+                <!-- <ec_dev translate="label" module="easyship">
                     <label>Easyship Dev</label>
                     <frontend_type>text</frontend_type>
                      <sort_order>30</sort_order>
@@ -55,7 +55,7 @@
                         </endpoint>
 
                     </fields>
-                </ec_dev>
+                </ec_dev> -->
             </groups>
         </easyship_options>
     </sections>
