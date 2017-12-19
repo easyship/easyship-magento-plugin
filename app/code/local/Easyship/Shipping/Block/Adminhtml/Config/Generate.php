@@ -4,7 +4,7 @@
  * Author: Easyship
  * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.0
- * Autho URI: https://www.easyship.com
+ * Author URI: https://www.easyship.com
 */
 
 class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_Block_System_Config_Form_Field
@@ -117,6 +117,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
         $url = Mage::helper( 'adminhtml')->getUrl('adminhtml/easyship/ajaxregister');
         $enable_rate_url = Mage::helper('adminhtml')->getUrl('adminhtml/easyship/ajaxactivate');
         $disable_rate_url = Mage::helper('adminhtml')->geturl('adminhtml/easyship/ajaxdeactivate');
+        $reset_url = Mage::helper('adminhtml')->getUrl('adminhtml/easyship/ajaxresetstore');
         $this->addData(
             array(
                 'store' => $element->getLabel(),
@@ -125,7 +126,9 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
                 'actived' => $is_actived,
                 'storeurl' => $url,
                 'acturl' => $enable_rate_url,
-                'deacturl' => $disable_rate_url
+                'deacturl' => $disable_rate_url,
+                'resetstoreurl' => $reset_url
+                
             )
         );
 

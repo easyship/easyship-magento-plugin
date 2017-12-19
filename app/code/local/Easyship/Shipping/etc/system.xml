@@ -35,24 +35,24 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
+                         <env>
+                            <label>Use Easyship Dev Endpoint</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <comment>Select Yes if using Dev Endpoint, No for Production API server</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </env>
                         <endpoint>
-                            <label>Easyship API Endpoint</label>
+                            <label>Easyship API Dev Endpoint</label>
                             <frontend_type>text</frontend_type>
                              <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                         </endpoint>
-                        <env>
-                            <label>Use Easyship Staging API</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>40</sort_order>
-                            <comment>Select Yes if using Staging API server, No for Production API server</comment>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </env>
 
                     </fields>
                 </ec_dev> -->

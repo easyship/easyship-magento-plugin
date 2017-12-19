@@ -38,8 +38,6 @@ Easyship.prototype.enableRate = function(url, storeid) {
 };
 
 Easyship.prototype.disableRate = function(url, storeid) {
-    console.log(url);
-    console.log(storeid);
     new Ajax.Request(url, {
         parameters: {isAjax:1, method: "POST", store_id: storeid},
         onSuccess: function(transport) {
@@ -49,6 +47,18 @@ Easyship.prototype.disableRate = function(url, storeid) {
             alert("Error: Fail to disable rate.  Please try again.");
         }
     });
+}
+
+Easyship.prototype.resetStore = function(url, storeid) {
+    new Ajax.Request(url, {
+        parameters: {isAjax: 1, method: "POST", store_id: storeid},
+        onSuccess: function(transport) {
+            location.reload();
+        },
+        onFailure: function(transport) {
+            alert("Error: Fail to reset store. Please try again.");
+        }
+    } )
 }
 
 var easyship = new Easyship;
