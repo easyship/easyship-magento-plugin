@@ -1,0 +1,40 @@
+<div class="flex-container storebackground">
+    <div class="statuscontainer">
+        <div class="storename">Store Name: <strong><?php echo $this->getStore(); ?></strong></div>
+        <div class="statusLabel">Plugin Status: <?php if ($this->getActived()) { ?>
+            <span class="status active">activated</span>
+        <?php } else { ?>
+            <span class="status deactive">disabled</span>
+        <?php } ?>
+        </div>
+        <div class="statusLabel">Rate API Status: <?php if ($this->getEnabled()) { ?>
+            <span class="status active">activated</span>
+        <?php } else { ?>
+            <span class="status deactive">disabled</span>
+        <?php } ?> </div>
+    </div>
+    <div class="buttoncontainer">
+    <?php
+
+if (!$this->getActived()) {
+    ?>
+        <button type="button" class="activatebutton" onclick="javascript:easyship.postRegistration('<?php echo $this->getStoreurl()?>', <?php echo $this->getStoreid() ?>);">ACTIVATE PLUGIN</button>
+    <?php
+}
+else {
+    ?>
+
+        <!-- <span><strong>Plugin Status</strong>: Active</span> -->
+        <?php if ($this->getEnabled()) {?>
+        <button  type="button" class="activatebutton deactivateRate" onclick="javascript:easyship.disableRate('<?php echo $this->getDeacturl() ?>', <?php echo $this->getStoreid() ?>);">DEACTIVATE THE RATES</button>
+        <?php } else {?>
+            <button  type="button" class="activatebutton activateRate" onclick="javascript:easyship.enableRate('<?php echo $this->getActurl() ?>', <?php echo $this->getStoreid() ?>);">ACTIVATE THE RATES</button>
+        <?php } ?>
+
+    <?php
+}
+?>
+    <button type="button" class="resetbutton" onclick="javascript:easyship.resetStore('<?php echo $this->getResetstoreurl() ?>', <?php echo $this->getStoreid() ?>);"> RESET STORE SETTINGS </button>
+    </div>
+
+</div>
