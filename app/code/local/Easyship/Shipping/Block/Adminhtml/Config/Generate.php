@@ -112,8 +112,8 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
     {
 
         $id = $element->getStoreid();
-        $is_actived = Mage::app()->getStore($id)->getConfig('easyship_options/ec_shipping/store_' . $id . '_isExtActive');
-        $is_enabled = Mage::app()->getStore($id)->getConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled');
+        $is_actived = Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isExtActive', 0);
+        $is_enabled = Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', 0);
         $url = Mage::helper( 'adminhtml')->getUrl('adminhtml/easyship/ajaxregister');
         $enable_rate_url = Mage::helper('adminhtml')->getUrl('adminhtml/easyship/ajaxactivate');
         $disable_rate_url = Mage::helper('adminhtml')->geturl('adminhtml/easyship/ajaxdeactivate');

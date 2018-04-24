@@ -50,7 +50,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getActivate(Mage_Shipping_Model_Rate_Request $request) {
         $id = $request->getStoreId();
-        return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', $this->getStore() );
+        return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', 0 );
     }
 
     /**
@@ -67,7 +67,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
             return false;
         }
         $token_config = $this->_configCode . 'store_' . $request->getStoreId()  . '_token';
-        $this->_token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, $this->getStore()));
+        $this->_token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, 0));
 
       //  Mage::log( 'Token: ' . $this->_token, null, 'easyship.log' );
 

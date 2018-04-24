@@ -272,7 +272,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         //     $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
         // }   
         $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
-        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token'));
+        $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id  . '_token', 0));
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';
         $requestBody = array();
         $requestBody['store'] = array();
