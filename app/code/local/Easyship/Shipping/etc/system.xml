@@ -27,37 +27,78 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                 </es_shipping>
-                <!-- <ec_dev translate="label" module="easyship">
-                    <label>Easyship Dev</label>
-                    <frontend_type>text</frontend_type>
-                     <sort_order>30</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
-                    <show_in_store>0</show_in_store>
-                    <fields>
-                         <env>
-                            <label>Use Easyship Dev Endpoint</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>40</sort_order>
-                            <comment>Select Yes if using Dev Endpoint, No for Production API server</comment>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </env>
-                        <endpoint>
-                            <label>Easyship API Dev Endpoint</label>
-                            <frontend_type>text</frontend_type>
-                             <sort_order>30</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </endpoint>
-
-                    </fields>
-                </ec_dev> -->
             </groups>
         </easyship_options>
+        <carriers>
+            <groups>
+                <easyship translate="label" module="easyship">
+                    <label>Easyship Shipping</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled for Checkout</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <base_category translate="label">
+                            <label>Base Category</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>easyship/source_categories</source_model>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </base_category>
+                        <base_width translate="label">
+                            <label>Base width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                            <validate>validate-zero-or-greater</validate>
+                        </base_width>
+                        <base_height translate="label">
+                            <label>Base height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                            <validate>validate-zero-or-greater</validate>
+                        </base_height>
+                        <base_length translate="label">
+                            <label>Base length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number</validate>
+                            <validate>validate-zero-or-greater</validate>
+                        </base_length>
+                    </fields>
+                </easyship>
+            </groups>
+        </carriers>
     </sections>
 
 </config>
