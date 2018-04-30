@@ -49,40 +49,6 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
         $html .= $this->_getElementHtml($element);
 
         $html .= '</div></td>';
-        if ($addInheritCheckbox) {
-
-            $defText = $element->getDefaultValue();
-            if ($options) {
-                $defTextArr = array();
-                foreach ($options as $k=>$v) {
-                    if ($isMultiple) {
-                        if (is_array($v['value']) && in_array($k, $v['value'])) {
-                            $defTextArr[] = $v['label'];
-                        }
-                    } elseif (isset($v['value'])) {
-                        if ($v['value'] == $defText) {
-                            $defTextArr[] = $v['label'];
-                            break;
-                        }
-                    } elseif (!is_array($v)) {
-                        if ($k == $defText) {
-                            $defTextArr[] = $v;
-                            break;
-                        }
-                    }
-                }
-                $defText = join(', ', $defTextArr);
-            }
-
-            // default value
-            $html.= '<td class="use-default">';
-            $html.= '<input id="' . $id . '_inherit" name="'
-                . $namePrefix . '[inherit]" type="checkbox" value="1" class="checkbox config-inherit" '
-                . $inherit . ' onclick="toggleValueElements(this, Element.previous(this.parentNode))" /> ';
-            $html.= '<label for="' . $id . '_inherit" class="inherit" title="'
-                . htmlspecialchars($defText) . '">' . $checkboxLabel . '</label>';
-            $html.= '</td>';
-        }
 
         $html.= '<td class="scope-label">';
         if ($element->getScope()) {
