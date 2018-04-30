@@ -203,6 +203,102 @@
                 </routes>
                 <versions>1</versions>
             </ec_order>
+            <ec_orders_by_time_range translate="title" module="api2">
+                <group>easyship</group>
+                <sort_order>25</sort_order>
+                <model>easyship/api2_itemsbytime</model>
+                <title>Shipping Order</title>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message" module="api2">
+                    <increment_id>Increment ID</increment_id>
+                    <parent_id>Parent ID </parent_id>
+                    <store_id>Store ID</store_id>
+                    <created_at>Order Date</created_at>
+                    <updated_at>Updated Date</updated_at>
+                    <is_active>Active Status</is_active>
+                    <customer_id>Customer ID</customer_id>
+                    <tax_amount>Tax Amount</tax_amount>
+                    <shipping_amount>Shipping Amount</shipping_amount>
+                    <discount_amount>Discount Amount</discount_amount>
+                    <subtotal>Subtotal</subtotal>
+                    <grand_total>Grand Total</grand_total>
+                    <total_paid>Total Paid</total_paid>
+                    <total_refunded>Total Refunded</total_refunded>
+                    <total_qty_ordered>Total Qty Ordered</total_qty_ordered>
+                    <total_canceled>Total Canceled</total_canceled>
+                    <total_invoiced>Total Invoiced</total_invoiced>
+                    <total_online_refunded>Total Online Refunded</total_online_refunded>
+                    <total_offline_Refunded>Tatal Offline Refunded</total_offline_Refunded>
+                    <base_tax_amount>Base Tax Amount</base_tax_amount>
+                    <base_shipping_amount>Base Shipping Amount</base_shipping_amount>
+                    <base_discount_amount>Base Discount Amount</base_discount_amount>
+                    <base_subtotal>Base Subtotal</base_subtotal>
+                    <base_grand_total>Base Grand Total</base_grand_total>
+                    <base_total_paid>Base Total Paid</base_total_paid>
+                    <base_total_refunded>Base Total Refunded</base_total_refunded>
+                    <base_total_qty_ordered>Base Total Qty Ordered</base_total_qty_ordered>
+                    <base_total_canceled>Base Total Canceled</base_total_canceled>
+                    <base_total_invoiced>Base Total Invoiced</base_total_invoiced>
+                    <base_total_online_refunded>Base Total Online Refunded</base_total_online_refunded>
+                    <base_total_offline_refunded>Base Total Offline Refunded</base_total_offline_refunded>
+                    <billing_address_id>Billing Address ID</billing_address_id>
+                    <billing_firstname>Billing First Name</billing_firstname>
+                    <billing_lastname>Billing Last Name</billing_lastname>
+                    <shipping_address_id>Shipping Address ID</shipping_address_id>
+                    <shipping_firstname>Shipping First Name</shipping_firstname>
+                    <shipping_lastname>Shipping Last Name</shipping_lastname>
+                    <billing_name>Billing Name</billing_name>
+                    <shipping_name>Shipping Name</shipping_name>
+                    <store_to_base_rate>Store To Base Rate</store_to_base_rate>
+                    <store_to_order_rate>Store To Order Rate</store_to_order_rate>
+                    <base_to_global_rate>Base To Global Rate</base_to_global_rate>
+                    <base_to_order_rate>Base To Order Rate</base_to_order_rate>
+                    <weight>Weight</weight>
+                    <store_name>Store Name</store_name>
+                    <remote_ip>Remote IP</remote_ip>
+                    <status>Status</status>
+                    <state>State</state>
+                    <applied_rule_ids>Applied Rule IDs</applied_rule_ids>
+                    <global_currency_code>Global Currency Code</global_currency_code>
+                    <base_currency_code>Base Currency Code</base_currency_code>
+                    <store_currency_code>Store Currency Code</store_currency_code>
+                    <order_currency_code>Order Currency Code</order_currency_code>
+                    <shipping_method>Shipping Method</shipping_method>
+                    <shipping_description>Shipping Description</shipping_description>
+                    <customer_email>Customer Email</customer_email>
+                    <customer_firstname>Customer First Name</customer_firstname>
+                    <customer_lastname>Customer Last Name</customer_lastname>
+                    <quite_id>Quote ID</quite_id>
+                    <is_virtual>Is Virtual</is_virtual>
+                    <customer_group_id>Customer Group ID</customer_group_id>
+                    <customer_note_notify>Customer Note Notify</customer_note_notify>
+                    <customer_is_guest>Customer Is Guest</customer_is_guest>
+                    <email_sent>Email Sent</email_sent>
+                    <entity_id>Order ID</entity_id>
+                    <gift_message_id>Gift Message ID</gift_message_id>
+                    <gift_message>Gift Message</gift_message>
+                </attributes>
+                <force_attributes>
+                    <admin>
+                        <payment>1</payment>
+                        <shipping_address>1</shipping_address>
+                        <items>1</items>
+                        <status_history>1</status_history>
+                        <shipments>1</shipments>
+                    </admin>
+                </force_attributes>
+                <routes>
+                    <route_collection>
+                        <route>/easyship/sales/time_range</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </ec_orders_by_time_range>
             <ec_address tranlate="title" module="api2">
                 <group>easyship</group>
                 <sort_order>40</sort_order>
