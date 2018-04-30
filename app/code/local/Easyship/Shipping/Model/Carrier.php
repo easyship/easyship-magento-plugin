@@ -75,6 +75,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
             return false;
         }
 
+        if ($this->isEstimateRequest($request)) {
+            return false;
+        }
+
         // create Easyship Request Body
         $this->_createEasyShipRequest( $request );
 
@@ -83,6 +87,19 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         Mage::log( 'Shipping Rates: ' . var_export( $result, 1), null, 'easyship.log' );    
         return $result;
 
+    }
+
+    /**
+     * @param $request
+     * @return bool
+     */
+    protected function isEstimateRequest($request)
+    {
+        if (empty($request->getDestCity()) || empty($request->getDestStreet())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -134,6 +151,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
          $r->setOutputCurrency( Mage::app()->getStore()->getCurrentCurrencyCode() );
 
+        $this->setAddressToRequest($r, $request);
+
          $items = array();
          if ( $request->getAllItems() ) {
             foreach ($request->getAllItems() as $item) {
@@ -163,6 +182,27 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
          Mage::log( '_rawRequest: ' . $this->_rawRequest->toJson(), null, 'easyship.log');
          
          return $this;
+    }
+
+    /**
+     * Set address to request
+     * @param $data
+     * @param $request
+     */
+    protected function setAddressToRequest($data, $request)
+    {
+        $address = explode("\n", $request->getDestStreet());
+        if (!empty($address[0])) {
+            $data->setData('destination_address_line_1', $address[0]);
+        } else {
+            $data->setData('destination_address_line_1', '');
+        }
+
+        if (!empty($address[1])) {
+            $data->setData('destination_address_line_2', $address[1]);
+        } else {
+            $data->setData('destination_address_line_2', '');
+        }
     }
 
     /**
