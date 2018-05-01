@@ -168,7 +168,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
                         'length' => $this->getEasyshipLength($item->getProduct()),
                         'category' => $this->getEasyshipCategory($item->getProduct()),
                         'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                        'declared_customs_value' => (float)$item->getPrice(),
+                        'declared_customs_value' => $this->getFinalItemPrice($item),
                         'sku' => $item->getSku()
                     );
                 }
@@ -203,6 +203,20 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         } else {
             $data->setData('destination_address_line_2', '');
         }
+    }
+
+    /**
+     * Get Item price with discount
+     * @param $item
+     * @return float
+     */
+    protected function getFinalItemPrice($item)
+    {
+        if (!empty($item->getDiscountAmount()) && ($item->getBaseDiscountAmount() > 0)) {
+            return (float) $item->getPrice() - $item->getDiscountAmount();
+        }
+
+        return (float) $item->getPrice();
     }
 
     /**
