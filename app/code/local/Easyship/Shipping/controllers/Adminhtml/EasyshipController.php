@@ -22,7 +22,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
 
                 // get easyship oauth consumer key and secret
 
-                $request['oauth'] = $this->_getOAuthInfo();
+                $request['oauth'] = $this->_getOAuthInfo($store_id);
                 $request['user'] = $this->_getUserInfo($store_id);
                 // company info
                 $request['company'] = $this->_getCompanyInfo($store_id);
@@ -55,7 +55,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
      *
      *  @return array
      */
-    protected function _getOAuthInfo()
+    protected function _getOAuthInfo($store_id)
     {
         $response = array();
         $collection = Mage::getModel('oauth/consumer')->getCollection();
@@ -232,6 +232,7 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                 $store_id = filter_var(Mage::app()->getRequest()->getPost('store_id'), FILTER_SANITIZE_SPECIAL_CHARS);
                 $enablePath = 'easyship_options/ec_shipping/store_' . $store_id . '_isRateEnabled';
                 Mage::getConfig()->saveConfig($enablePath, '0', 'default', 0);
+                Mage::app()->getCacheInstance()->cleanType('config');
                 $response = $this->_doRateRequest($store_id, false);
                 $this->getResponse()->setHeader('Content-type', 'application/json', true);
                 $response['status'] = 'ok';
@@ -315,8 +316,11 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                  Mage::getConfig()->deleteConfig($tokenPath);
                  Mage::getConfig()->deleteConfig($enablePath);
                  Mage::getConfig()->deleteConfig($activatePath);
+                 Mage::app()->getCacheInstance()->cleanType('config');
                  $this->getResponse()->setHeader('Content-type', 'application/json', true);
                  $response['status'] = 'ok';
+                 Mage::getSingleton('core/session')->addNotice("Easyship has been deactivated successfully, to complete the process please deactivate the store at easyship.com. \n
+Go to “Connect” > Find store > click “Delete Store”");
                  $this->getResponse()->setBody(json_encode($response));
              }
              else {
