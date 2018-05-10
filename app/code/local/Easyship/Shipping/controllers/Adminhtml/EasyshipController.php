@@ -51,33 +51,29 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
     }
 
     /**
-     *  Retriver OAuth Consumer Information
+     *  Retriver OAuth Consumer Information (create new consumer)
      *
      *  @return array
      */
     protected function _getOAuthInfo($store_id)
     {
         $response = array();
-        $collection = Mage::getModel('oauth/consumer')->getCollection();
 
-        foreach ($collection as $consumer) {
-            if ($consumer->getName() == 'easyship') {
-                // check if using custom admin path
-                $route = ((bool)(string)Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_USE_CUSTOM_ADMIN_PATH))
-                ? Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_CUSTOM_ADMIN_PATH)
-                : Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_ADMINHTML_ROUTER_FRONTNAME);
-                
-                $response['consumer_key'] = $consumer->getKey();
-                $response['consumer_secret'] = $consumer->getSecret();
-                $response['request_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/initiate';
-                $response['request_authorize_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . $route[0] . '/oauth_authorize'; 
-                $response['request_access_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/token';
+        /** @var Mage_Oauth_Model_Consumer $consumer */
+        $consumer = Mage::getModel('easyship/oauth_consumer')->createOAuthConsumer($store_id);
 
-                return $response;
-            }
-        }
+        // check if using custom admin path
+        $route = ((bool)(string)Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_USE_CUSTOM_ADMIN_PATH))
+        ? Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_CUSTOM_ADMIN_PATH)
+        : Mage::getConfig()->getNode(Mage_Adminhtml_Helper_Data::XML_PATH_ADMINHTML_ROUTER_FRONTNAME);
 
-        throw new Exception('Easyship consumer not found');
+        $response['consumer_key'] = $consumer->getKey();
+        $response['consumer_secret'] = $consumer->getSecret();
+        $response['request_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/initiate';
+        $response['request_authorize_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . $route[0] . '/oauth_authorize';
+        $response['request_access_token_path'] = Mage::getStoreConfig(Mage_Core_Model_Store::XML_PATH_SECURE_BASE_URL, $store_id) . 'oauth/token';
+
+        return $response;
     }
 
     /**
@@ -316,8 +312,12 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
                  Mage::getConfig()->deleteConfig($tokenPath);
                  Mage::getConfig()->deleteConfig($enablePath);
                  Mage::getConfig()->deleteConfig($activatePath);
+
+                 Mage::getModel('easyship/oauth_consumer')->deleteOAuthConsumer($store_id);
+
                  Mage::app()->getCacheInstance()->cleanType('config');
                  $this->getResponse()->setHeader('Content-type', 'application/json', true);
+
                  $response['status'] = 'ok';
                  Mage::getSingleton('core/session')->addNotice("Easyship has been deactivated successfully, to complete the process please deactivate the store at easyship.com. \n
 Go to “Connect” > Find store > click “Delete Store”");
