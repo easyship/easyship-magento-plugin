@@ -6,7 +6,7 @@ $installer->startSetup();
 
 $eavSetup = Mage::getResourceModel('catalog/setup', 'catalog_setup');
 
-$easyship_height_data = array(
+$easyshipHeightData = array(
     'type'      => 'int',
     'input'     => 'text',
     'global'    =>  Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE,
@@ -21,9 +21,9 @@ $easyship_height_data = array(
     'label' => 'Easyship Height (cm)'
 );
 
-$eavSetup->addAttribute('catalog_product', 'easyship_height', $easyship_height_data);
+$eavSetup->addAttribute('catalog_product', 'easyship_height', $easyshipHeightData);
 
-$easyship_width_data = array(
+$easyshipWidthData = array(
     'type'      => 'int',
     'input'     => 'text',
     'global'    =>  Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE,
@@ -38,9 +38,9 @@ $easyship_width_data = array(
     'label' => 'Easyship Width (cm)'
 );
 
-$eavSetup->addAttribute('catalog_product', 'easyship_width', $easyship_width_data);
+$eavSetup->addAttribute('catalog_product', 'easyship_width', $easyshipWidthData);
 
-$easyship_length_data = array(
+$easyshipLengthData = array(
     'type'      => 'int',
     'input'     => 'text',
     'global'    =>  Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE,
@@ -55,9 +55,9 @@ $easyship_length_data = array(
     'label' => 'Easyship Length (cm)'
 );
 
-$eavSetup->addAttribute('catalog_product', 'easyship_length', $easyship_length_data);
+$eavSetup->addAttribute('catalog_product', 'easyship_length', $easyshipLengthData);
 
-$easyship_category_data = array(
+$easyshipCategoryData = array(
     'type'      => 'text',
     'input'     => 'select',
     'backend' => 'eav/entity_attribute_backend_array',
@@ -74,7 +74,7 @@ $easyship_category_data = array(
     'label' => 'Easyship Category'
 );
 
-$eavSetup->addAttribute('catalog_product', 'easyship_category', $easyship_category_data);
+$eavSetup->addAttribute('catalog_product', 'easyship_category', $easyshipCategoryData);
 
 
 $installer->endSetup();

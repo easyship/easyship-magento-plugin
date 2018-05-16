@@ -15,7 +15,7 @@ class Easyship_Shipping_Model_Oauth_Consumer extends Mage_Core_Helper_Abstract
             return false;
         }
 
-        $storeId = intval($storeId);
+        $storeId = (int) $storeId;
 
         $consumerName = self::EASYSHIP_CONSUMER_PREFIX . $storeId;
         $consumerDeleted = $this->isExistConsumer($consumerName);
@@ -34,11 +34,12 @@ class Easyship_Shipping_Model_Oauth_Consumer extends Mage_Core_Helper_Abstract
         /** @var $helper Mage_Oauth_Helper_Data */
         $helper = Mage::helper('oauth');
 
-        $consumer->setData([
-            'name' => $consumerName,
-            'key' => $helper->generateConsumerKey(),
-            'secret' => $helper->generateConsumerSecret(),
-        ]);
+        $consumer->setData(array(
+                'name' => $consumerName,
+                'key' => $helper->generateConsumerKey(),
+                'secret' => $helper->generateConsumerSecret(),
+            )
+        );
 
         $consumer->save();
 

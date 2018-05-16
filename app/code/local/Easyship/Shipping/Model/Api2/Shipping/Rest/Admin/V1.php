@@ -16,8 +16,8 @@ class Easyship_Shipping_Model_Api2_Shipping_Rest_Admin_V1 extends Easyship_Shipp
      */
     protected function _retrieve()
     {
-        $page   = $this->getRequest()->getParam('page');
-        if (!$page) $page =1;
+        $page = $this->getRequest()->getParam('page');
+        if (!$page) $page = 1;
 
         $collection = $this->_getCollectionForRetrieve();
 
@@ -26,10 +26,10 @@ class Easyship_Shipping_Model_Api2_Shipping_Rest_Admin_V1 extends Easyship_Shipp
         if ($this->_validateDateParams($params)) {
             $collection->addFieldToFilter(
                 'updated_at',
-                [
+                array(
                     'from' => $params['created_at_from'],
                     'to' => $params['created_at_to']
-                ]
+                )
             );
         }
 

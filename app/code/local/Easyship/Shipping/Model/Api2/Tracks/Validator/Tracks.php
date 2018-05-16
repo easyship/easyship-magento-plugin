@@ -5,7 +5,7 @@
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.3
  * Author URI: https://www.easyship.com
-*/
+ */
 
 class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Model_Resource_Validator
 {
@@ -17,8 +17,9 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
     public function __construct($options)
     {
         if (!isset($options['operation']) || empty($options['operation'])) {
-            throw new Exception("Passed parameter 'operation' is empty");
+            Mage::throwException("Passed parameter 'operation' is empty");
         }
+
         $this->_operation = $options['operation'];
     }
 
@@ -39,8 +40,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
             $this->_validateTitle($data);
             $this->_valiedateTrackNumber($data);
             $isStatisfied = count($this->getErrors()) == 0;
-        }
-        catch (Mage_Api2_Exception $e) {
+        } catch (Mage_Api2_Exception $e) {
             $this->_addError($e->getMessage());
             $isStatisfied = false;
         }
@@ -86,7 +86,8 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         $orderIncrementId = $data['track']['orderIncrementId'];
         $shipment = Mage::getModel('sales/order_shipment')->loadByIncrementId($shipmentIncrementId);
         if (!is_string($orderIncrementId)) {
-            $this->_critical('Order Increment Id is not a string in request.', Mage_Api2_Model_Server::HTTP_BAD_REQUEST );
+            $this->_critical('Order Increment Id is not a string in request.',
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
 
         if ($shipment->getOrder()->getIncrementId() != $orderIncrementId) {
@@ -102,7 +103,8 @@ class Easyship_Shipping_Model_Api2_Tracks_Validator_Tracks extends Mage_Api2_Mod
         $shipmentIncrementId = $data['track']['shipmentIncrementId'];
 
         if (!is_string($shipmentIncrementId)) {
-            $this->_critical('Shipment Incremend Id is not a string in request', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            $this->_critical('Shipment Incremend Id is not a string in request',
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
 
         $shipment = Mage::getModel('sales/order_shipment')->loadByIncrementId($shipmentIncrementId);

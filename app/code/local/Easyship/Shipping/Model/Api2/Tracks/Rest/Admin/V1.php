@@ -5,7 +5,7 @@
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.3
  * Author URI: https://www.easyship.com
-*/
+ */
 
 class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shipping_Model_Api2_Tracks_Rest
 {
@@ -26,17 +26,18 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
                 if (empty($requestData)) {
                     $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
                 }
+
                 if ($this->getRequest()->isAssocArrayInRequestBody()) {
                     $this->_errorIfMethodNotExist('_create');
                     $filteredData = $this->getFilter()->in($requestData);
                     if (empty($filteredData)) {
                         $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
                     }
+
                     $shipmentData = $this->_create($filteredData);
                     $filteredData = $this->getFilter()->out($shipmentData);
                     $this->_render($filteredData);
-                }
-                else {
+                } else {
                     $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
                 }
                 break;
@@ -55,7 +56,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
     public function _create(array $data)
     {
 
-        $orderIncrementId    = $this->getRequest()->getParam('orderincrementid');
+        $orderIncrementId = $this->getRequest()->getParam('orderincrementid');
         $data['track']['orderIncrementId'] = $orderIncrementId;
         $shipmentIncrementId = $this->getRequest()->getParam('shipmentincrementid');
         $data['track']['shipmentIncrementId'] = $shipmentIncrementId;
@@ -66,7 +67,7 @@ class Easyship_Shipping_Model_Api2_Tracks_Rest_Admin_V1 extends Easyship_Shippin
 
         if (!$validator->isValidData($data)) {
             foreach ($validator->getErrors() as $error) {
-                 $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
             $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
         }

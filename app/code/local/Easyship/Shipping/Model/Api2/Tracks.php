@@ -26,12 +26,6 @@ class Easyship_Shipping_Model_Api2_Tracks extends Mage_Api2_Model_Resource
             $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
         }
 
-        // $carriers = $this->_getCarriers($shipment);
-
-        // if (!isset($carriers[$carrier])) {
-        //     $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
-        // }
-
         $track = Mage::getModel('sales/order_shipment_track')
                     ->setNumber($trackNumber)
                     ->setCarrierCode($carrier)

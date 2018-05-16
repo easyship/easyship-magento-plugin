@@ -5,7 +5,7 @@
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
  * Version: 0.1.3
  * Author URI: https://www.easyship.com
-*/
+ */
 
 class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
 {
@@ -24,7 +24,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
         return $collection;
     }
 
-      /**
+    /**
      * Retrieve a list or orders' addresses in a form of [order ID => array of addresses, ...]
      *
      * @param array $orderIds Orders identifiers
@@ -115,7 +115,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
         return $items;
     }
 
-     /**
+    /**
      *  Retrive order status in a form of [order ID => status history, ...]
      *
      * @param array $orderIds Orders identifiers
@@ -142,18 +142,16 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
     }
 
 
-
-
     protected function _getOrders(array $orderIds)
     {
         $orders = array();
         if (count($orderIds) == 0) {
-          return $orders;
+            return $orders;
         }
-        $items    = $this->_getItems($orderIds);
+        $items = $this->_getItems($orderIds);
         $addresses = $this->_getAddresses($orderIds);
         $payments = $this->_getPayment($orderIds);
-        $status   = $this->_getStatusHistory($orderIds);
+        $status = $this->_getStatusHistory($orderIds);
         $shipments = $this->_getShipment($orderIds);
 
         if ($this->_isSubCallAllowed('ec_order')) {
@@ -168,7 +166,9 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                     $orderId = $order->getId();
                     $_order = $orderFilter->out($order->toArray());
                     $_order['order_id'] = $orderId;
-                    for ($i=0; $i < count($addresses[$orderId]); $i++) {
+                    $addressesCount = count($addresses[$orderId]);
+
+                    for ($i = 0; $i < $addressesCount; $i++) {
                         $address = $addresses[$orderId][$i];
                         if ($address['address_type'] == 'billing') {
                             $_order['billing_firstname'] = $address['firstname'];
@@ -176,8 +176,7 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                             if ($address['name']) {
                                 $_order['billing_name'] = $address['name'];
                             }
-                        }
-                        else if ($address['address_type'] == 'shipping') {
+                        } else if ($address['address_type'] == 'shipping') {
                             $_order['shipping_firstname'] = $address['firstname'];
                             $_order['shipping_lastname'] = $address['lastname'];
                             $_order['shipping_address'] = $address;
@@ -217,10 +216,10 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                 foreach ($collection->getItems() as $item) {
 
                     $order = Mage::getModel('sales/order')->load($item->getOrderId());
-                    $filtered_result = $statusFilter->out($item->toArray());
-                    $filtered_result['order_increment_id'] =  $order->getIncrementId();
-                    $filtered_result['tracks'] = $this->_getTracks(array($item->getId()));
-                    $shipments[$item->getOrderId()][] = $filtered_result;
+                    $filteredResult = $statusFilter->out($item->toArray());
+                    $filteredResult['order_increment_id'] = $order->getIncrementId();
+                    $filteredResult['tracks'] = $this->_getTracks(array($item->getId()));
+                    $shipments[$item->getOrderId()][] = $filteredResult;
 
                 }
             }
