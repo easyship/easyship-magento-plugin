@@ -2,8 +2,8 @@
 /**
  * Class Easyship_Shipping_Model_Carrier
  * Author: Easyship
- * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.0
+ * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.3
  * Author URI: https://www.easyship.com
  */
 
@@ -332,7 +332,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         // }
         // else {
         //     $url = $this->getConfigData( 'easyship_api_url');
-        // }   
+        // }
         $url = $this->getConfigData('easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
