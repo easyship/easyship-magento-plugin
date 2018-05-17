@@ -2,8 +2,8 @@
 /**
  * Class Easyship_Shipping_Model_Carrier
  * Author: Easyship
- * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.3
+ * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.0
  * Author URI: https://www.easyship.com
  */
 
@@ -216,7 +216,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getFinalItemPrice($item)
     {
-        if (!empty($item->getDiscountAmount()) && ($item->getBaseDiscountAmount() > 0)) {
+        $discountAmount = $item->getDiscountAmount();
+        $baseDiscountAmount = $item->getBaseDiscountAmount();
+
+        if (!empty($discountAmount) && ($baseDiscountAmount > 0)) {
             return (float)$item->getPrice() - $item->getDiscountAmount();
         }
 
@@ -332,7 +335,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         // }
         // else {
         //     $url = $this->getConfigData( 'easyship_api_url');
-        // }
+        // }   
         $url = $this->getConfigData('easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
