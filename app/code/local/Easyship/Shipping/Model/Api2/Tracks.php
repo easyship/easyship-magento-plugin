@@ -2,8 +2,8 @@
 /**
  * Class Easyship_Shipping_Model_Api2_Tracks
  * Author: Easyship
- * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.0
+ * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.3
  * Author URI: https://www.easyship.com
 */
 
@@ -25,12 +25,6 @@ class Easyship_Shipping_Model_Api2_Tracks extends Mage_Api2_Model_Resource
         if (!$shipment->getId()) {
             $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
         }
-
-        // $carriers = $this->_getCarriers($shipment);
-
-        // if (!isset($carriers[$carrier])) {
-        //     $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
-        // }
 
         $track = Mage::getModel('sales/order_shipment_track')
                     ->setNumber($trackNumber)

@@ -1,14 +1,14 @@
 <?php
-/** 
+/**
  * Class Easyship_Shipping_Model_Carrier
  * Author: Easyship
- * Developer: Sunny Cheung, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.0
- * Author URI: https://www.easyship.com 
-*/
+ * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
+ * Version: 0.1.3
+ * Author URI: https://www.easyship.com
+ */
 
 
-class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface 
+class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface
 {
     protected $_code = 'easyship';
 
@@ -26,7 +26,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      *
      * @return null
      */
-    public function getAllowedMethods() {
+    public function getAllowedMethods()
+    {
         return null;
     }
 
@@ -37,8 +38,9 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @param $code
      * @return mixed
      */
-    protected function getStoreConfig( $code ) {
-        return Mage::getStoreConfig( $this->_configCode . $code, $this->getStore() );
+    protected function getStoreConfig($code)
+    {
+        return Mage::getStoreConfig($this->_configCode . $code, $this->getStore());
     }
 
     /**
@@ -48,9 +50,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @param Mage_Shipping_Model_Rate_Request $request
      * @return mixed
      */
-    protected function getActivate(Mage_Shipping_Model_Rate_Request $request) {
+    protected function getActivate(Mage_Shipping_Model_Rate_Request $request)
+    {
         $id = $request->getStoreId();
-        return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', $this->getStore() );
+        return Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $id . '_isRateEnabled', 0);
     }
 
     /**
@@ -60,29 +63,49 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @return bool|false|Mage_Core_Model_Abstract
      */
 
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
-    {  
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
+    {
         // Configuration setting will be not under carrier scope
-        if ( !$this->getConfigFlag('active') || !$this->getActivate($request) )  {
+        if (!$this->getConfigFlag('active') || !$this->getActivate($request)) {
             return false;
         }
-        $token_config = $this->_configCode . 'store_' . $request->getStoreId()  . '_token';
-        $this->_token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, $this->getStore()));
+        $token_config = $this->_configCode . 'store_' . $request->getStoreId() . '_token';
+        $this->_token = Mage::helper('core')->decrypt(Mage::getStoreConfig($token_config, 0));
 
-      //  Mage::log( 'Token: ' . $this->_token, null, 'easyship.log' );
+        //  Mage::log( 'Token: ' . $this->_token, null, 'easyship.log' );
 
-        if ( !$this->_token ) {
+        if (!$this->_token) {
+            return false;
+        }
+
+        if ($this->isEstimateRequest($request)) {
             return false;
         }
 
         // create Easyship Request Body
-        $this->_createEasyShipRequest( $request );
+        $this->_createEasyShipRequest($request);
 
-        $result = $this->_getQuotes();    
+        $result = $this->_getQuotes();
 
-        Mage::log( 'Shipping Rates: ' . var_export( $result, 1), null, 'easyship.log' );    
+        Mage::log('Shipping Rates: ' . var_export($result, 1), null, 'easyship.log');
         return $result;
 
+    }
+
+    /**
+     * @param $request
+     * @return bool
+     */
+    protected function isEstimateRequest($request)
+    {
+        $destCity = $request->getDestCity();
+        $destStreet = $request->getDestStreet();
+
+        if (empty($destCity) || empty($destStreet)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -92,73 +115,208 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @return $this
      */
 
-    protected function _createEasyShipRequest(Mage_Shipping_Model_Rate_Request $request) {
+    protected function _createEasyShipRequest(Mage_Shipping_Model_Rate_Request $request)
+    {
 
-         $this->_request = $request;
+        $this->_request = $request;
 
-         $r = new Varien_Object();
+        $r = new Varien_Object();
 
-         if ( $request->getOrigCountry() ) {
+        if ($request->getOrigCountry()) {
             $origCountry = $request->getOrigCountry();
-         }
-         else {
+        } else {
             $origCountry = Mage::getStoreConfig(
                 Mage_Shipping_Model_Shipping::XML_PATH_STORE_COUNTRY_ID,
-                $request->getStoreId() );
-         }
+                $request->getStoreId());
+        }
 
-         $r->setOriginCountryAlpha2( Mage::getModel('directory/country')->load($origCountry)->getIso2Code() );
+        $r->setOriginCountryAlpha2(Mage::getModel('directory/country')->load($origCountry)->getIso2Code());
 
-         if ( $request->getOrigPostcode() ) {
-            $r->setOriginPostalCode( $request->getOrigPostcode() );
-         }
-         else {
-            $r->setOriginPostalCode( Mage::getStoreConfig(
-              Mage_Shipping_Model_Shipping::XML_PATH_STORE_ZIP,
-              $request->getStoreId()
+        if ($request->getOrigPostcode()) {
+            $r->setOriginPostalCode($request->getOrigPostcode());
+        } else {
+            $r->setOriginPostalCode(Mage::getStoreConfig(
+                Mage_Shipping_Model_Shipping::XML_PATH_STORE_ZIP,
+                $request->getStoreId()
             ));
-         }
+        }
 
-         if ( $request->getDestCountryId() ) {
+        if ($request->getDestCountryId()) {
             $destCountry = $request->getDestCountryId();
-         }
-         else {
+        } else {
             $destCountry = 'US';
-         }
+        }
 
-         $r->setDestinationCountryAlpha2( Mage::getModel('directory/country')->load($destCountry)->getIso2Code() );
+        $r->setDestinationCountryAlpha2(Mage::getModel('directory/country')->load($destCountry)->getIso2Code());
 
-         if ( $request->getDestPostcode() ) {
-            $r->setDestinationPostalCode( $request->getDestPostcode() );
-         }
+        if ($request->getDestPostcode()) {
+            $r->setDestinationPostalCode($request->getDestPostcode());
+        }
 
-         $r->setOutputCurrency( Mage::app()->getStore()->getCurrentCurrencyCode() );
+        $r->setOutputCurrency(Mage::app()->getStore()->getCurrentCurrencyCode());
 
-         $items = array();
-         if ( $request->getAllItems() ) {
+        $this->setAddressToRequest($r, $request);
+
+        $items = array();
+        if ($request->getAllItems()) {
             foreach ($request->getAllItems() as $item) {
-                if ($item->getProduct()->isVirtual() || $item->getParentItem() ) {
+                if ($item->getProduct()->isVirtual() || $item->getParentItem()) {
                     continue;
                 }
 
                 for ($i = 0; $i < $item->getQty(); $i++) {
-                  $items[] = array(
-                    'actual_weight' =>  $item->getWeight(),
-                    'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
-                    'declared_customs_value' =>  (float) $item->getPrice(),
-                    'sku' =>  $item->getSku()
-                  );
+                    $items[] = array(
+                        'actual_weight' => $item->getWeight(),
+                        'height' => $this->getEasyshipHeight($item->getProduct()),
+                        'width' => $this->getEasyshipWidth($item->getProduct()),
+                        'length' => $this->getEasyshipLength($item->getProduct()),
+                        'category' => $this->getEasyshipCategory($item->getProduct()),
+                        'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
+                        'declared_customs_value' => $this->getFinalItemPrice($item),
+                        'sku' => $item->getSku()
+                    );
                 }
             }
-         }
-      
-         $r->setItems($items);
+        }
 
-         $this->_rawRequest = $r;
+        $r->setItems($items);
 
-         Mage::log( '_rawRequest: ' . $this->_rawRequest->toJson(), null, 'easyship.log');
-         
-         return $this;
+        $this->_rawRequest = $r;
+
+        Mage::log('_rawRequest: ' . $this->_rawRequest->toJson(), null, 'easyship.log');
+
+        return $this;
+    }
+
+    /**
+     * Set address to request
+     * @param $data
+     * @param $request
+     */
+    protected function setAddressToRequest($data, $request)
+    {
+        $address = explode("\n", $request->getDestStreet());
+        if (!empty($address[0])) {
+            $data->setData('destination_address_line_1', $address[0]);
+        } else {
+            $data->setData('destination_address_line_1', '');
+        }
+
+        if (!empty($address[1])) {
+            $data->setData('destination_address_line_2', $address[1]);
+        } else {
+            $data->setData('destination_address_line_2', '');
+        }
+    }
+
+    /**
+     * Get Item price with discount
+     * @param $item
+     * @return float
+     */
+    protected function getFinalItemPrice($item)
+    {
+        $discountAmount = $item->getDiscountAmount();
+        $baseDiscountAmount = $item->getBaseDiscountAmount();
+
+        if (!empty($discountAmount) && ($baseDiscountAmount > 0)) {
+            return (float)$item->getPrice() - $item->getDiscountAmount();
+        }
+
+        return (float)$item->getPrice();
+    }
+
+    /**
+     * Get easyship category
+     * @param $item
+     * @return string
+     */
+    protected function getEasyshipCategory($item)
+    {
+        $isEasyshipCategory = $item->hasEasyshipCategory();
+        $EasyshipCategory = $item->getEasyshipCategory();
+
+        if ($isEasyshipCategory && !empty($EasyshipCategory)) {
+            return $item->getEasyshipCategory();
+        }
+
+        $base_category = Mage::getStoreConfig('carriers/easyship/base_category', $this->getStoreId());
+
+        if (empty($base_category)) {
+            return '';
+        }
+
+        return $base_category;
+    }
+
+    /**
+     * Get easyship height
+     * @param $item
+     * @return int
+     */
+    protected function getEasyshipHeight($item)
+    {
+        $isEasyshipHeight = $item->hasEasyshipHeight();
+        $EasyshipHeight   = $item->getEasyshipHeight();
+
+        if ($isEasyshipHeight && !empty($EasyshipHeight)) {
+            return (int)$item->getEasyshipHeight();
+        }
+
+        $base_height = Mage::getStoreConfig('carriers/easyship/base_height', $this->getStoreId());
+
+        if (empty($base_height)) {
+            return 0;
+        }
+
+        return (int)$base_height;
+    }
+
+    /**
+     * Get easyship width
+     * @param $item
+     * @return int
+     */
+    protected function getEasyshipWidth($item)
+    {
+        $isEasyshipWidth = $item->hasEasyshipWidth();
+        $EasyshipWidth   = $item->getEasyshipWidth();
+
+        if ($isEasyshipWidth && !empty($EasyshipWidth)) {
+            return (int)$item->getEasyshipWidth();
+        }
+
+        $base_width = Mage::getStoreConfig('carriers/easyship/base_width', $this->getStoreId());
+
+        if (empty($base_width)) {
+            return 0;
+        }
+
+        return (int)$base_width;
+    }
+
+    /**
+     * Get easyship length
+     * @param $item
+     * @return int
+     */
+    protected function getEasyshipLength($item)
+    {
+
+        $isEasyshipLength = $item->hasEasyshipLength();
+        $EasyshipLength   = $item->getEasyshipLength();
+
+        if ($isEasyshipLength && !empty($EasyshipLength)) {
+            return (int)$item->getEasyshipLength();
+        }
+
+        $base_length = Mage::getStoreConfig('carriers/easyship/base_length', $this->getStoreId());
+
+        if (empty($base_length)) {
+            return 0;
+        }
+
+        return (int)$base_length;
     }
 
     /**
@@ -190,8 +348,8 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         // }
         // else {
         //     $url = $this->getConfigData( 'easyship_api_url');
-        // }   
-        $url = $this->getConfigData( 'easyship_api_url');
+        // }
+        $url = $this->getConfigData('easyship_api_url');
 
         $url = $url . '/rate/v1/magento';
         $client = new Varien_Http_Client($url);
@@ -203,32 +361,32 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
         $json = $this->_rawRequest->toJson();
 
-        $client->setRawData($json,null);
-        $response = $client->request( 'POST');
+        $client->setRawData($json, null);
+        $response = $client->request('POST');
 
         if (!$response->isSuccessful()) {
-            Mage::log( 'Fail to connect', null, 'easyship.log' );
-            Mage::log( var_export( $response, 1), null, 'easyship.log');
+            Mage::log('Fail to connect', null, 'easyship.log');
+            Mage::log(var_export($response, 1), null, 'easyship.log');
             return false;
         }
-        
+
         // decode JSON respond
-        $rates = json_decode( $response->getBody(), true );
-        Mage::log( 'OK to connect:', null, 'easyship.log' );
+        $rates = json_decode($response->getBody(), true);
+        Mage::log('OK to connect:', null, 'easyship.log');
 
         // Get Preferred Rates
         $prefer_rates = $rates['rates']; //$this->_prefer_rates( $rates['rates'] );
-        Mage::log( 'Prefer Rates: ' . var_export( $prefer_rates, 1), null, 'easyship.log' );
-        
+        Mage::log('Prefer Rates: ' . var_export($prefer_rates, 1), null, 'easyship.log');
+
         $result = Mage::getModel('shipping/rate_result');
-        foreach ( $prefer_rates as $rate ) {
-            $r = Mage::getModel( 'shipping/rate_result_method' );
-            $r->setCarrier( $this->_code );
-            $r->setCarrierTitle( $this->getConfigData( 'title' ) );
-            $r->setMethod( $rate['courier_id'] );
-            $r->setMethodTitle( $rate['full_description'] );
-            $r->setCost( $rate['total_charge'] );
-            $r->setPrice( $rate['total_charge'] );
+        foreach ($prefer_rates as $rate) {
+            $r = Mage::getModel('shipping/rate_result_method');
+            $r->setCarrier($this->_code);
+            $r->setCarrierTitle($this->getConfigData('title'));
+            $r->setMethod($rate['courier_id']);
+            $r->setMethodTitle($rate['full_description']);
+            $r->setCost($rate['total_charge']);
+            $r->setPrice($rate['total_charge']);
             $result->append($r);
         }
 
@@ -252,19 +410,20 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      * @param $trackings Tracking Number
      * @return Mage_Shipping_Model_Tracking_Result | bool
      */
-    public function getTrackingInfo($trackings) {
+    public function getTrackingInfo($trackings)
+    {
 
         $result = Mage::getModel('shipping/tracking_result');
         $tracking = Mage::getModel('shipping/tracking_result_status');
-        $tracking->setCarrier( $this->_code );
-        $tracking->setCarrierTitle( $this->getConfigData( 'title' ) );
+        $tracking->setCarrier($this->_code);
+        $tracking->setCarrierTitle($this->getConfigData('title'));
         $tracking->setTracking($trackings);
         $tracking->setPopup(1);
         $tracking->setUrl("https://www.trackmyshipment.co/shipment-tracking/" . $trackings);
         $result->append($tracking);
 
         if ($tracks = $result->getAllTrackings()) {
-          return $tracks[0];
+            return $tracks[0];
         }
         return false;
     }
