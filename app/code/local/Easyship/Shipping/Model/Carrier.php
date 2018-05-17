@@ -233,7 +233,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getEasyshipCategory($item)
     {
-        if ($item->hasEasyshipCategory() && !empty($item->getEasyshipCategory())) {
+        $isEasyshipCategory = $item->hasEasyshipCategory();
+        $EasyshipCategory = $item->getEasyshipCategory();
+
+        if ($isEasyshipCategory && !empty($EasyshipCategory)) {
             return $item->getEasyshipCategory();
         }
 
@@ -253,7 +256,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getEasyshipHeight($item)
     {
-        if ($item->hasEasyshipHeight() && !empty($item->getEasyshipHeight())) {
+        $isEasyshipHeight = $item->hasEasyshipHeight();
+        $EasyshipHeight   = $item->getEasyshipHeight();
+
+        if ($isEasyshipHeight && !empty($EasyshipHeight)) {
             return (int)$item->getEasyshipHeight();
         }
 
@@ -273,7 +279,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getEasyshipWidth($item)
     {
-        if ($item->hasEasyshipWidth() && !empty($item->getEasyshipWidth())) {
+        $isEasyshipWidth = $item->hasEasyshipWidth();
+        $EasyshipWidth   = $item->getEasyshipWidth();
+
+        if ($isEasyshipWidth && !empty($EasyshipWidth)) {
             return (int)$item->getEasyshipWidth();
         }
 
@@ -293,7 +302,11 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function getEasyshipLength($item)
     {
-        if ($item->hasEasyshipLength() && !empty($item->getEasyshipLength())) {
+
+        $isEasyshipLength = $item->hasEasyshipLength();
+        $EasyshipLength   = $item->getEasyshipLength();
+
+        if ($isEasyshipLength && !empty($EasyshipLength)) {
             return (int)$item->getEasyshipLength();
         }
 
