@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Block_Adminhtml_Config_Generate
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author URI: https://www.easyship.com
 */
 
@@ -94,7 +94,7 @@ class Easyship_Shipping_Block_Adminhtml_Config_Generate extends Mage_Adminhtml_B
                 'acturl' => $enableRateUrl,
                 'deacturl' => $disableRateUrl,
                 'resetstoreurl' => $resetUrl
-                
+
             )
         );
 
