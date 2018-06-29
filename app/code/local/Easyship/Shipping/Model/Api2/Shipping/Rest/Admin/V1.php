@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Model_Api2_Shipping_Rest_Admin_V1
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author URI: https://www.easyship.com
  */
 

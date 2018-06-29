@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Adminhtml_EasyshipController
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author URI: https://www.easyship.com
  */
 
@@ -252,8 +252,8 @@ class Easyship_Shipping_Adminhtml_EasyshipController extends Mage_Adminhtml_Cont
         //     }
         // }
         // else {
-        //     $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');    
-        // }   
+        //     $url = Mage::getStoreConfig( 'carriers/easyship/easyship_api_url');
+        // }
         $url = Mage::getStoreConfig('carriers/easyship/easyship_api_url');
         $token = Mage::helper('core')->decrypt(Mage::getStoreConfig('easyship_options/ec_shipping/store_' . $store_id . '_token', 0));
         $endpoint = rtrim(trim($url), '/') . '/store/v1/stores';

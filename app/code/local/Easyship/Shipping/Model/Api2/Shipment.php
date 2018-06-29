@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Model_Api2_Shipment
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.3
+ * Version: 0.1.4
  * Author URI: https://www.easyship.com
 */
 
@@ -14,8 +14,8 @@ class Easyship_Shipping_Model_Api2_Shipment extends Mage_Api2_Model_Resource
     {
         $_data = array();
         foreach ($data as $item) {
-            if (isset($item->order_item_id) && isset($item->qty)) {
-                $_data[$item->order_item_id] = $item->qty;
+            if (isset($item['order_item_id']) && isset($item['qty'])) {
+                $_data[$item['order_item_id']] = $item['qty'];
             }
         }
         return $_data;
@@ -26,9 +26,8 @@ class Easyship_Shipping_Model_Api2_Shipment extends Mage_Api2_Model_Resource
         $order = Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId);
         $itemsQty = $this->_prepareItemQtyData($itemsQty);
 
-        $shipment = $order->prepareShipment($itemQty);
+        $shipment = $order->prepareShipment($itemsQty);
         if ($shipment) {
-            $shipment->register();
             $shipment->register();
             $shipment->addComment($comment, $email && $includeComment);
             if ($email) {
