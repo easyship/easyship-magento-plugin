@@ -127,6 +127,9 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
             'easyship_width' => $helper->getEasyshipWidth($product),
             'easyship_length' => $helper->getEasyshipLength($product),
             'weight_unit' => 'kg'
+            'weight_unit' => 'kg',
+            'dimension_unit' => $helper->getDimensionUnit()
+
         ];
 
         return $data;

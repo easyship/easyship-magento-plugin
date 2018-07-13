@@ -77,4 +77,12 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
 
         return (int)$base_length;
     }
+
+    public function getDimensionUnit()
+    {
+
+        $dimension_unit = Mage::getStoreConfig('carriers/easyship/dimension_unit', $this->getStoreId());
+
+        return $dimension_unit;
+    }
 }

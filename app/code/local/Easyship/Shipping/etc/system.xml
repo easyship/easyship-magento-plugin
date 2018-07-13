@@ -95,6 +95,15 @@
                             <validate>validate-number</validate>
                             <validate>validate-zero-or-greater</validate>
                         </base_length>
+                        <dimension_unit translate="label">
+                            <label>Dimension unit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>For length, height, width.</comment>
+                        </dimension_unit>
                     </fields>
                 </easyship>
             </groups>

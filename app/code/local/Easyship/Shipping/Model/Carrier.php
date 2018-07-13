@@ -182,7 +182,9 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
                         'category' => $this->getEasyshipCategory($item->getProduct()),
                         'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
                         'declared_customs_value' => $this->getFinalItemPrice($item),
-                        'sku' => $item->getSku()
+                        'sku' => $item->getSku(),
+                        'weight_unit' => 'kg',
+                        'dimension_unit' => $this->_helper->getDimensionUnit()
                     );
                 }
             }
