@@ -175,16 +175,16 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
 
                 for ($i = 0; $i < $item->getQty(); $i++) {
                     $items[] = array(
-                        'actual_weight' => $item->getWeight(),
-                        'height' => $this->_helper->getEasyshipHeight($item->getProduct()),
-                        'width' => $this->_helper->getEasyshipWidth($item->getProduct()),
-                        'length' => $this->_helper->getEasyshipLength($item->getProduct()),
+                        'actual_weight' => $this->_helper->getWeightConvert($item->getProduct()),
+                        'height' => $this->_helper->getEasyshipHeightConvert($item->getProduct()),
+                        'width' => $this->_helper->getEasyshipWidthConvert($item->getProduct()),
+                        'length' => $this->_helper->getEasyshipLengthConvert($item->getProduct()),
                         'category' => $this->getEasyshipCategory($item->getProduct()),
                         'declared_currency' => Mage::app()->getStore()->getCurrentCurrencyCode(),
                         'declared_customs_value' => $this->getFinalItemPrice($item),
                         'sku' => $item->getSku(),
                         'weight_unit' => 'kg',
-                        'dimension_unit' => $this->_helper->getDimensionUnit()
+                        'dimension_unit' => 'cm'
                     );
                 }
             }
@@ -251,7 +251,7 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
             return $item->getEasyshipCategory();
         }
 
-        $base_category = Mage::getStoreConfig('carriers/easyship/base_category', $this->getStoreId());
+        $base_category = Mage::getStoreConfig('easyship_options/general/base_category', $this->getStoreId());
 
         if (empty($base_category)) {
             return '';

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Easyship_Shipping>
-            <version>0.1.5</version>
+            <version>0.1.6</version>
         </Easyship_Shipping>
     </modules>
     <global>
@@ -51,9 +51,14 @@
                 <model>easyship/carrier</model>
                 <easyship_api_url>https://api.easyship.com</easyship_api_url>
                 <shipment_requesttype>0</shipment_requesttype>
-                <dimension_unit>cm</dimension_unit>
             </easyship>
         </carriers>
+        <easyship_options>
+            <general>
+                <dimension_unit>cm</dimension_unit>
+                <weight_unit>kg</weight_unit>
+            </general>
+        </easyship_options>
     </default>
     <adminhtml>
         <acl>
