@@ -90,7 +90,7 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getEasyshipWidthConvert($item)
     {
-        $width = $this->getEasyshipHeight($item);
+        $width = $this->getEasyshipWidth($item);
         $unit = $this->getDimensionUnit();
 
         switch ($unit) {
@@ -123,7 +123,7 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getEasyshipLengthConvert($item)
     {
-        $length = $this->getEasyshipHeight($item);
+        $length = $this->getEasyshipLength($item);
         $unit = $this->getDimensionUnit();
 
         switch ($unit) {
