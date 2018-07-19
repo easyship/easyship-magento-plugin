@@ -122,14 +122,14 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
     {
         /** @var Easyship_Shipping_Helper_Data $helper */
         $helper = Mage::helper('easyship');
-        $data = [
+        $data = array(
             'easyship_height' => $helper->getEasyshipHeight($product),
             'easyship_width' => $helper->getEasyshipWidth($product),
             'easyship_length' => $helper->getEasyshipLength($product),
             'weight_unit' => $helper->getWeightUnit(),
             'dimension_unit' => $helper->getDimensionUnit()
 
-        ];
+        );
 
         return $data;
     }

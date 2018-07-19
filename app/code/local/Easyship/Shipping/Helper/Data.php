@@ -42,8 +42,9 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getEasyshipHeight($item)
     {
-        if ($item->hasEasyshipHeight() && !empty($item->getEasyshipHeight())) {
-            return (int)$item->getEasyshipHeight();
+        $productHeight = $item->getEasyshipHeight();
+        if (!empty($productHeight)) {
+            return (int)$productHeight;
         }
 
         $base_height = Mage::getStoreConfig('easyship_options/general/base_height', $this->getStoreId());
@@ -75,8 +76,9 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getEasyshipWidth($item)
     {
-        if ($item->hasEasyshipWidth() && !empty($item->getEasyshipWidth())) {
-            return (int)$item->getEasyshipWidth();
+        $productWidth = $item->getEasyshipWidth();
+        if (!empty($productWidth)) {
+            return (int)$productWidth;
         }
 
         $base_width = Mage::getStoreConfig('easyship_options/general/base_width', $this->getStoreId());
@@ -108,8 +110,9 @@ class Easyship_Shipping_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getEasyshipLength($item)
     {
-        if ($item->hasEasyshipLength() && !empty($item->getEasyshipLength())) {
-            return (int)$item->getEasyshipLength();
+        $productLength = $item->getEasyshipLength();
+        if (!empty($productLength)) {
+            return (int)$productLength;
         }
 
         $base_length = Mage::getStoreConfig('easyship_options/general/base_length', $this->getStoreId());
