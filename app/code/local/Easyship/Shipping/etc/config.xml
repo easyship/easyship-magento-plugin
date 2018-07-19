@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Easyship_Shipping>
-            <version>0.1.6</version>
+            <version>0.1.5</version>
         </Easyship_Shipping>
     </modules>
     <global>
