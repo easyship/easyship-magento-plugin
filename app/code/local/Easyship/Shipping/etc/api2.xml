@@ -18,7 +18,7 @@
                         <retrieve>1</retrieve>
                     </admin>
                 </privileges>
-                <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message" module="api2">
+                <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message easyship_height easyship_width easyship_length" module="api2">
                     <increment_id>Increment ID</increment_id>
                     <parent_id>Parent ID </parent_id>
                     <store_id>Store ID</store_id>
@@ -63,6 +63,9 @@
                     <base_to_global_rate>Base To Global Rate</base_to_global_rate>
                     <base_to_order_rate>Base To Order Rate</base_to_order_rate>
                     <weight>Weight</weight>
+                    <easyship_height>Height</easyship_height>
+                    <easyship_width>Width</easyship_width>
+                    <easyship_length>Length</easyship_length>
                     <store_name>Store Name</store_name>
                     <remote_ip>Remote IP</remote_ip>
                     <status>Status</status>
@@ -113,7 +116,7 @@
                         <retrieve>1</retrieve>
                     </admin>
                 </privileges>
-                <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message" module="api2">
+                <attributes translate="increment_id parent_id store_id created_at updated_at is_active customer_id tax_amount shipping_amount discount_amount subtotal grand_total total_paid total_refunded total_qty_ordered total_canceled total_invoiced total_online_refunded total_offline_refunded base_tax_amount base_shipping_amount base_discount_amount base_subtotal base_grand_total base_total_paid base_total_refunded base_total_qty_ordered base_total_canceled base_total_invoiced base_total_online_refunded base_total_offline_refunded billing_address_id billing_firstname billing_lastname shipping_address_id shipping_firstname shipping_lastname billing_name shipping_name store_to_base_rate store_to_order_rate base_to_global_rate base_to_order_rate weight store_name remote_ip status state applied_rule_ids global_currency_code base_currency_code store_currency_code order_currency_code shipping_method shipping_description customer_email customer_firstname customer_lastname quote_id is_virtual customer_group_id customer_note_notify customer_is_guest email_sent entity_id gift_message_id gift_message easyship_height easyship_width easyship_length" module="api2">
                     <increment_id>Increment ID</increment_id>
                     <parent_id>Parent ID </parent_id>
                     <store_id>Store ID</store_id>
@@ -158,6 +161,9 @@
                     <base_to_global_rate>Base To Global Rate</base_to_global_rate>
                     <base_to_order_rate>Base To Order Rate</base_to_order_rate>
                     <weight>Weight</weight>
+                    <easyship_height>Height</easyship_height>
+                    <easyship_width>Width</easyship_width>
+                    <easyship_length>Length</easyship_length>
                     <store_name>Store Name</store_name>
                     <remote_ip>Remote IP</remote_ip>
                     <status>Status</status>

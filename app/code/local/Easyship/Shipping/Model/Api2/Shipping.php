@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Model_Api2_Shipping
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.4
+ * Version: 0.1.5
  * Author URI: https://www.easyship.com
  */
 
@@ -107,12 +107,31 @@ class Easyship_Shipping_Model_Api2_Shipping extends Mage_Api2_Model_Resource
                 $collection->addAttributeToFilter('order_id', $orderIds);
 
                 foreach ($collection->getItems() as $item) {
-                    $items[$item->getOrderId()][] = $itemsFilter->out($item->toArray());
+                    $dimension_data = $this->getDimension($item->getProduct());
+                    $data = array_merge($itemsFilter->out($item->toArray()), $dimension_data);
+
+                    $items[$item->getOrderId()][] = $data;
                 }
             }
         }
 
         return $items;
+    }
+
+    protected function getDimension($product)
+    {
+        /** @var Easyship_Shipping_Helper_Data $helper */
+        $helper = Mage::helper('easyship');
+        $data = array(
+            'easyship_height' => $helper->getEasyshipHeight($product),
+            'easyship_width' => $helper->getEasyshipWidth($product),
+            'easyship_length' => $helper->getEasyshipLength($product),
+            'weight_unit' => $helper->getWeightUnit(),
+            'dimension_unit' => $helper->getDimensionUnit()
+
+        );
+
+        return $data;
     }
 
     /**
