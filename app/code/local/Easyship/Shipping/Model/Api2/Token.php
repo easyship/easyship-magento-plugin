@@ -4,7 +4,7 @@
  * Class Easyship_Shipping_Model_Api2_Token
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 0.1.5
+ * Version: 1.0.0
  * Author URI: https://www.easyship.com
 */
 
