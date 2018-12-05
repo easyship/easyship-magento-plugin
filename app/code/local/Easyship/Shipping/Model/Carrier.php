@@ -206,6 +206,14 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
      */
     protected function setAddressToRequest($data, $request)
     {
+        if ($request->getDestCity()) {
+            $data->setDestinationCity($request->getDestCity());
+        }
+
+        if ($request->getDestRegionCode()) {
+            $data->setDestinationState($request->getDestRegionCode());
+        }
+
         $address = explode("\n", $request->getDestStreet());
         if (!empty($address[0])) {
             $data->setData('destination_address_line_1', $address[0]);
