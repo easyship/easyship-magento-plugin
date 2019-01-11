@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Block_Adminhtml_Config_Generate
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: https://www.easyship.com
 */
 
