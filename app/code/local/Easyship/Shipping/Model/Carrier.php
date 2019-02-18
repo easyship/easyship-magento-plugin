@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Model_Carrier
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author URI: https://www.easyship.com
  */
 
@@ -239,10 +239,10 @@ class Easyship_Shipping_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstra
         $baseDiscountAmount = $item->getBaseDiscountAmount();
 
         if (!empty($discountAmount) && ($baseDiscountAmount > 0)) {
-            return (float)$item->getPrice() - $item->getDiscountAmount();
+            return (float)$item->getTaxAmount() + $item->getPrice() - $item->getDiscountAmount();
         }
 
-        return (float)$item->getPrice();
+        return (float)$item->getTaxAmount() + $item->getPrice();
     }
 
     /**
