@@ -3,7 +3,7 @@
  * Class Easyship_Shipping_Model_Api2_Tracks
  * Author: Easyship
  * Developer: Sunny Cheung, Holubiatnikova Anna, Aloha Chen, Phanarat Pak, Paul Lugangne Delpon
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author URI: https://www.easyship.com
 */
 
